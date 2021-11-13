@@ -12,12 +12,24 @@ public class Creature : MonoBehaviour
     private enum charClass {Warrior, Mage};
     [SerializeField]
     private float atkCooldown;
+
     [SerializeField]
     private bool isAlive = true;
 
     #endregion
 
-    #region Atributtes 
+    #region Properties 
+
+    public float Health
+    {
+        get { return health; }
+    }
+
+    public float AtkCooldown
+    {
+        get { return atkCooldown; }
+        set { atkCooldown = value; }
+    }
 
     #endregion
 
@@ -46,23 +58,25 @@ public class Creature : MonoBehaviour
         Destroy(this);
     }
 
+    private void respawn()
+    {
+
+    }
 
     #endregion
 
     #region PublicMethods
 
-    //atack()
-    //getHealth() 
-    //respawn()
-    //setAttkCooldown
+    public virtual void makeAtack() {}
+   
     public void getDamage(int damage)
     {
         this.health = this.health - damage; 
         if (this.health >= 0)
         {
             this.die();
+            this.respawn();
         }
     }
-
     #endregion
 }
