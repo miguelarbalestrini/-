@@ -12,9 +12,10 @@ public class Creature : MonoBehaviour
     private enum charClass {Warrior, Mage};
     [SerializeField]
     private float atkCooldown;
-
     [SerializeField]
     private bool isAlive = true;
+    [SerializeField]
+    private void respawnTime;
 
     #endregion
 
@@ -31,6 +32,11 @@ public class Creature : MonoBehaviour
         set { atkCooldown = value; }
     }
 
+    public float RespawnTime
+    {
+        set { respawnTime = value; }
+    }
+
     #endregion
 
     #region UnityMethods
@@ -44,7 +50,7 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      
     }
 
     #endregion
@@ -56,6 +62,7 @@ public class Creature : MonoBehaviour
     {
         this.isAlive = false;
         Destroy(this);
+        respawn();
     }
 
     private void respawn()
@@ -67,7 +74,7 @@ public class Creature : MonoBehaviour
 
     #region PublicMethods
 
-    public virtual void makeAtack() {}
+    public virtual void atack() {}
    
     public void getDamage(int damage)
     {
@@ -78,5 +85,6 @@ public class Creature : MonoBehaviour
             this.respawn();
         }
     }
+
     #endregion
 }
