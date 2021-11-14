@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kingslayer : MonoBehaviour
+public class Kingslayer : Creature
 {
     #region Fields
 
@@ -35,7 +35,7 @@ public class Kingslayer : MonoBehaviour
 
     public void pickWeapon(Weapon newWeapon)
     {
-
+        
     }
 
     #endregion
