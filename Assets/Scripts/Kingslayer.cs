@@ -25,6 +25,33 @@ public class Kingslayer : Creature
         atack();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (weapon.IsGrounded)
+        {
+            weapon.PickText.gameObject.SetActive(true);
+            weapon.PickText.text = "Press E to pick weapon";
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKeyDown(KeyCode.E) && weapon.IsGrounded)
+        {
+            this.transform.GetChild(3).gameObject.SetActive(true);
+            this.transform.GetChild(4).gameObject.SetActive(true);
+            weapon.DestroyWeapon();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (weapon.IsGrounded)
+        {
+            weapon.PickText.gameObject.SetActive(false);
+        }
+    }
+
     #endregion
 
     #region ProtectedMethods

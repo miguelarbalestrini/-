@@ -9,8 +9,9 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private float damage;
     [SerializeField]
-    private bool grounded;
-        
+    private bool grounded = true;
+    [SerializeField]
+    private TextMesh pickText;        
 
     #endregion
 
@@ -22,10 +23,24 @@ public class Weapon : MonoBehaviour
         set { damage = value; }
     }
 
-    public bool Grounded
+    public bool IsGrounded
     {
         get { return grounded; }
     }
+
+    public TextMesh PickText
+    {
+        get { return pickText; }
+    }
+    #endregion
+
+    #region PublicMethod
+
+    public void DestroyWeapon()
+    {
+        Destroy(gameObject);
+    }
+
 
     #endregion
 }
