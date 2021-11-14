@@ -16,13 +16,14 @@ public class Kingslayer : Creature
     // Start is called before the first frame update
     void Start()
     {
-
+        this.RemainingCD = this.atkCooldown;
     }
 
     // Update is called once per frame
     void Update()
     {
         Atack();
+        this.AtackCooldown();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,13 +60,18 @@ public class Kingslayer : Creature
     protected override void Atack()
     {
         base.Atack();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !this.AstkInCooldown)
         {
             Debug.Log($"atack");
-            AnimationController.SetBool("isAttacking", true);
-        } else
+            this.AstkInCooldown = true;
+            // AnimationController.SetBool("isAttacking", true);
+            //} else
+            //{
+            //AnimationController.SetBool("isAttacking", false);
+        }
+        if (!this.AstkInCooldown)
         {
-            AnimationController.SetBool("isAttacking", false);
+            this.RemainingCD = this.atkCooldown;
         }
     }
 

@@ -11,13 +11,16 @@ public class Creature : MonoBehaviour
     [SerializeField]
     private enum charClass {Warrior, Mage};
     [SerializeField]
-    private float atkCooldown;
+    protected float atkCooldown;
+    [SerializeField]
+    protected bool atkInCooldown = false;
     [SerializeField]
     private bool isAlive = true;
     [SerializeField]
     private float respawnTime;
     [SerializeField]
     private Animator animationControler;
+    private float remainingCD;
 
     #endregion
 
@@ -34,9 +37,21 @@ public class Creature : MonoBehaviour
         set { atkCooldown = value; }
     }
 
+    public bool AstkInCooldown
+    {
+        get { return atkInCooldown; }
+        set { atkInCooldown = value; }
+    }
+
+
     public float RespawnTime
     {
         set { respawnTime = value; }
+    }
+
+    public float RemainingCD
+    {
+        set { remainingCD = value; }
     }
 
     public Animator AnimationController
@@ -52,13 +67,13 @@ public class Creature : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        this.remainingCD = this.atkCooldown;
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+    
     }
 
     #endregion
@@ -70,6 +85,19 @@ public class Creature : MonoBehaviour
         this.isAlive = true;
     }
 
+    protected void AtackCooldown()
+    {
+        if(this.atkInCooldown && this.remainingCD > 0)
+        {
+            this.remainingCD -= Time.deltaTime;
+            Debug.Log($"creature log cd remaining {remainingCD}");
+        }
+        if(this.remainingCD <= 0)
+        {
+            this.atkInCooldown = false;
+        }
+    }
+
     #endregion
 
     #region ProtectedMethods
@@ -78,7 +106,7 @@ public class Creature : MonoBehaviour
 
     protected void GetDamaged(int damage)
     {
-        this.health = this.health - damage;
+        this.health -= damage;
         if (this.health >= 0)
         {
             this.Die();
