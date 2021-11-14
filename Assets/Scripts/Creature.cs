@@ -15,7 +15,7 @@ public class Creature : MonoBehaviour
     [SerializeField]
     private bool isAlive = true;
     [SerializeField]
-    private int respawnTime;
+    private float respawnTime;
 
     #endregion
 
