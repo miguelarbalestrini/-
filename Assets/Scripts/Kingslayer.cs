@@ -22,20 +22,30 @@ public class Kingslayer : Creature
     // Update is called once per frame
     void Update()
     {
-
+        atack();
     }
+
+    #endregion
+
+    #region ProtectedMethods
+
+    protected override void atack()
+    {
+        base.atack();
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log($"atack");
+        }
+    }
+
 
     #endregion
 
     #region PrivateMethods
 
-    #endregion
-
-    #region PublicMethods
-
-    public void pickWeapon(Weapon newWeapon)
+    private void pickWeapon(Weapon newWeapon)
     {
-        
+        this.weapon = newWeapon;
     }
 
     #endregion

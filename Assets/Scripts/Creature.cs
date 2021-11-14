@@ -57,14 +57,6 @@ public class Creature : MonoBehaviour
 
     #region PrivateMethods
 
-
-    private void die()
-    {
-        this.isAlive = false;
-        Destroy(this);
-        respawn();
-    }
-
     private void respawn()
     {
         this.isAlive = true;
@@ -72,19 +64,30 @@ public class Creature : MonoBehaviour
 
     #endregion
 
-    #region PublicMethods
+    #region ProtectedMethods
 
-    public virtual void atack() {}
-   
-    public void getDamage(int damage)
+    protected virtual void atack() {}
+
+    protected void getDamaged(int damage)
     {
-        this.health = this.health - damage; 
+        this.health = this.health - damage;
         if (this.health >= 0)
         {
             this.die();
             this.respawn();
         }
     }
+
+    protected void die()
+    {
+        this.isAlive = false;
+        Destroy(this);
+        respawn();
+    }
+
+    #endregion
+
+    #region PublicMethods
 
     #endregion
 }
