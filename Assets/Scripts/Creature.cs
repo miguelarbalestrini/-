@@ -16,6 +16,8 @@ public class Creature : MonoBehaviour
     private bool isAlive = true;
     [SerializeField]
     private float respawnTime;
+    [SerializeField]
+    private Animator animationControler;
 
     #endregion
 
@@ -35,6 +37,12 @@ public class Creature : MonoBehaviour
     public float RespawnTime
     {
         set { respawnTime = value; }
+    }
+
+    public Animator AnimationController
+    {
+        get { return animationControler; }
+        //set { animationControler = value; }
     }
 
     #endregion

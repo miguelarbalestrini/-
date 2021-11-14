@@ -62,6 +62,10 @@ public class Kingslayer : Creature
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log($"atack");
+            AnimationController.SetBool("isAttacking", true);
+        } else
+        {
+            AnimationController.SetBool("isAttacking", false);
         }
     }
 

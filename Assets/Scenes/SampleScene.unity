@@ -331,6 +331,7 @@ MonoBehaviour:
   atkCooldown: 0
   isAlive: 1
   respawnTime: 0
+  animationControler: {fileID: 0}
   weapon: {fileID: 1822350219}
 --- !u!1 &156244707
 GameObject:
