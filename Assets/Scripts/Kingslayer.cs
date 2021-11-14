@@ -22,7 +22,7 @@ public class Kingslayer : Creature
     // Update is called once per frame
     void Update()
     {
-        atack();
+        Atack();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,9 +56,9 @@ public class Kingslayer : Creature
 
     #region ProtectedMethods
 
-    protected override void atack()
+    protected override void Atack()
     {
-        base.atack();
+        base.Atack();
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log($"atack");
@@ -74,7 +74,7 @@ public class Kingslayer : Creature
 
     #region PrivateMethods
 
-    private void pickWeapon(Weapon newWeapon)
+    private void PickWeapon(Weapon newWeapon)
     {
         this.weapon = newWeapon;
     }

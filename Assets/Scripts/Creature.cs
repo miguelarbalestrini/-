@@ -65,7 +65,7 @@ public class Creature : MonoBehaviour
 
     #region PrivateMethods
 
-    private void respawn()
+    private void Respawn()
     {
         this.isAlive = true;
     }
@@ -74,23 +74,23 @@ public class Creature : MonoBehaviour
 
     #region ProtectedMethods
 
-    protected virtual void atack() {}
+    protected virtual void Atack() {}
 
-    protected void getDamaged(int damage)
+    protected void GetDamaged(int damage)
     {
         this.health = this.health - damage;
         if (this.health >= 0)
         {
-            this.die();
-            this.respawn();
+            this.Die();
+            this.Respawn();
         }
     }
 
-    protected void die()
+    protected void Die()
     {
         this.isAlive = false;
         Destroy(this);
-        respawn();
+        Respawn();
     }
 
     #endregion
