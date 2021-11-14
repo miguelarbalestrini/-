@@ -67,7 +67,7 @@ public class Creature : MonoBehaviour
 
     private void respawn()
     {
-
+        this.isAlive = true;
     }
 
     #endregion
