@@ -8,6 +8,7 @@ public class Kingslayer : Creature
 
     [SerializeField]
     private Weapon weapon;
+    private Weapon hiddenWeapon;
 
     #endregion
 
@@ -17,6 +18,7 @@ public class Kingslayer : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
+        hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
     }
 
     // Update is called once per frame
@@ -24,7 +26,7 @@ public class Kingslayer : Creature
     {
         Atack();
         this.AtackCooldown();
-        Debug.Log(RemainingCD);
+        //Debug.Log(RemainingCD);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +44,7 @@ public class Kingslayer : Creature
         {
             this.transform.GetChild(3).gameObject.SetActive(true);
             this.transform.GetChild(4).gameObject.SetActive(true);
+            //PickWeapon(hiddenWeapon);
             weapon.DestroyWeapon();
         }
     }
@@ -64,11 +67,13 @@ public class Kingslayer : Creature
         if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
             //Debug.Log($"atack");
+            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
         } else if (RemainingCD < 1f){
             AnimationController.SetBool("isAttacking", false);
+            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
