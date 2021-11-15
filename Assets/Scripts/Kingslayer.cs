@@ -24,6 +24,7 @@ public class Kingslayer : Creature
     {
         Atack();
         this.AtackCooldown();
+        Debug.Log(RemainingCD);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,8 +67,7 @@ public class Kingslayer : Creature
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
-        } else
-        {
+        } else if (RemainingCD < 1f){
             AnimationController.SetBool("isAttacking", false);
         }
     }

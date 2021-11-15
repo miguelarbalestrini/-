@@ -51,6 +51,7 @@ public class Creature : MonoBehaviour
 
     public float RemainingCD
     {
+        get { return remainingCD; }
         set { remainingCD = value; }
     }
 

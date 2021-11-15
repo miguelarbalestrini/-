@@ -8,21 +8,28 @@ public class EnemyController : Creature
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
-    //[SerializeField] private int waitTime = 0;
+    [SerializeField] private GameObject player;
     private int waypointIndex = 0;
+    bool onRange;
     private bool goBack = false;
+    private bool canFollow = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        onRange = false;
         this.RemainingCD = this.atkCooldown;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveEnemy();
+        if (!canFollow)
+        {
+            MoveEnemy();
+        }
         this.AtackCooldown();
+        Aggro();
     }
 
     private void MoveEnemy()
@@ -59,4 +66,27 @@ public class EnemyController : Creature
             }
         }
     }
+
+    private void Aggro()
+    {
+        bool warrior = true;
+  
+        if (warrior)
+        {
+            Vector3 vectorDir = player.transform.position - transform.position;
+
+            if (Vector3.Distance(player.transform.position, transform.position) < 10f)
+            {
+                canFollow = true;
+                Quaternion newRotation = Quaternion.LookRotation(vectorDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
+                transform.position += vectorDir.normalized * Time.deltaTime * speed;
+            }
+            else
+            {
+                canFollow = false;
+            }
+        }
+    }
 }
+
