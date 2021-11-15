@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1318,13 +1318,18 @@ MonoBehaviour:
   atkInCooldown: 0
   isAlive: 1
   respawnTime: 0
-  animationControler: {fileID: 0}
+  animationControler: {fileID: 809500377}
   waypoints:
   - {fileID: 140819386}
   - {fileID: 456550510}
-  speed: 2
+  speed: 1
   rotationSpeed: 50
   minDistance: 1
+--- !u!95 &809500377 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 23c63a6de3e98744ba0285f97e32f1f3, type: 3}
+  m_PrefabInstance: {fileID: 1201103705}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &809500378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23c63a6de3e98744ba0285f97e32f1f3, type: 3}
@@ -1346,6 +1351,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &809500380
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809500375}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &816764577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,7 +2129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23c63a6de3e98744ba0285f97e32f1f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23c63a6de3e98744ba0285f97e32f1f3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2358,6 +2376,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.014344037, y: -0.04310393, z: -0.05314344}
     m_Extent: {x: 0.22419421, y: 0.06168222, z: 0.3378993}
   m_DirtyAABB: 0
+--- !u!1 &1295995994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9024361520966851472, guid: eddba5c9e7e241048923c0027285f029, type: 3}
+  m_PrefabInstance: {fileID: 8213880916864829323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1295995999
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295995994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.030036421, y: 0.0091673955, z: 0.10141825}
+  m_Center: {x: 0.009873174, y: -0.00034385428, z: 0.052069638}
 --- !u!1 &1313220851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2479,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411283194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.25, y: 0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 809500378}
@@ -3090,6 +3126,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1931562312}
   - component: {fileID: 1931562313}
+  - component: {fileID: 1931562314}
+  - component: {fileID: 1931562315}
   m_Layer: 0
   m_Name: Paladin_J_Nordstrom_Sword
   m_TagString: Untagged
@@ -3164,6 +3202,34 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.06104052, y: -0.006658852, z: 0.3036496}
     m_Extent: {x: 0.15018207, y: 0.045836862, z: 0.50709116}
   m_DirtyAABB: 0
+--- !u!114 &1931562314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931562311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad62a16957ac2447aad64a11d461108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  grounded: 1
+  pickText: {fileID: 0}
+--- !u!65 &1931562315
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931562311}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.30036518, y: 0.09282962, z: 1.0142858}
+  m_Center: {x: 0.7965743, y: 1.4115677, z: 0.24661732}
 --- !u!1 &1938181915
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3426,10 @@ PrefabInstance:
     - target: {fileID: 8213880917811482042, guid: eddba5c9e7e241048923c0027285f029, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213880917811482042, guid: eddba5c9e7e241048923c0027285f029, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eddba5c9e7e241048923c0027285f029, type: 3}
