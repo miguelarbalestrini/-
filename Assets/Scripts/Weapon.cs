@@ -5,13 +5,25 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     #region Fields
-
     [SerializeField]
     private float damage;
     [SerializeField]
     private bool grounded = true;
     [SerializeField]
-    private TextMesh pickText = null;        
+    private TextMesh pickText = null;
+    protected Vector3 targetPosition;
+    [SerializeField]
+    protected float range;
+
+    public Vector3 TargetPosition
+    {
+        set { this.targetPosition = value; }
+    }
+
+    public float Range
+    {
+        set { this.range = value; }
+    }
 
     #endregion
 
@@ -36,7 +48,7 @@ public class Weapon : MonoBehaviour
 
     #region UnityMethods
 
-    private void makeDamage(Creature target)
+    protected void makeDamage(Creature target)
     {
         if (target != null)
         {
