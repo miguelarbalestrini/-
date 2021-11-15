@@ -49,7 +49,6 @@ public class EnemyController : Creature
             {
                 transform.position += transform.forward * speed * Time.deltaTime;
                 transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
-                Debug.Log("ACA TOY");
             }
           
         }
