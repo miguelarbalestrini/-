@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : Creature
 {
+    #region Fields
+
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
@@ -11,14 +13,16 @@ public class EnemyController : Creature
     [SerializeField] private GameObject player;
     [SerializeField] private float atackRange = 6f;
     [SerializeField] private float followRange = 10f;
-    [SerializeField] private bool warrior = false;
-    [SerializeField] private bool archer = true;
-    [SerializeField] private CharClass EnemyClass;
+    [SerializeField] private CharClass enemyClass;
+    [SerializeField] private Weapon weapon;
     private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
     private bool canFollow = false;
 
+    #endregion
+
+    #region UnityMethods
 
     // Start is called before the first frame update
     void Start()
@@ -31,17 +35,19 @@ public class EnemyController : Creature
     {
         if (!canFollow)
         {
-          
-          MoveEnemy();
-            
+          MoveEnemy(); 
         }
         this.AtackCooldown();
         Aggro();
     }
 
+    #endregion
+
+    #region PrivateMethods
+
     private void MoveEnemy()
     {
-         Vector3 direction = waypoints[waypointIndex].position - transform.position;
+        Vector3 direction = waypoints[waypointIndex].position - transform.position;
 
         if (!this.atkInCooldown)
         {
@@ -50,29 +56,30 @@ public class EnemyController : Creature
                 transform.position += transform.forward * speed * Time.deltaTime;
                 transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
             }
-          
+
         }
 
-        if ( direction.magnitude < minDistance)
+        if (direction.magnitude < minDistance)
         {
             this.AtkInCooldown = true;
             this.RemainingCD = this.atkCooldown;
 
-            if (waypointIndex >= waypoints.Length - 1 )
+            if (waypointIndex >= waypoints.Length - 1)
             {
-                
+
                 goBack = true;
             }
-            else if (waypointIndex <= 0 )
+            else if (waypointIndex <= 0)
             {
-                
+
                 goBack = false;
             }
             if (!goBack)
             {
                 waypointIndex++;
             }
-            else {             
+            else
+            {
                 waypointIndex--;
             }
         }
@@ -80,56 +87,84 @@ public class EnemyController : Creature
 
     private void Aggro()
     {
-       
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        Vector3 vectorDir = player.transform.position - transform.position;
-        
-        switch (EnemyClass)
+        if (player != null)
         {
-            case CharClass.Warrior:
-                if (distance < followRange)
+            float distance = Vector3.Distance(player.transform.position, transform.position);
+            Vector3 vectorDir = player.transform.position - transform.position;
+
+            if (distance < followRange)
+            {
+                if (!onRange)
                 {
                     this.canFollow = true;
                     Quaternion newRotation = Quaternion.LookRotation(vectorDir);
                     transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
                     transform.position += vectorDir.normalized * Time.deltaTime * speed;
                 }
-                else
+                if (distance <= atackRange)
                 {
-                    canFollow = false;
+                    transform.LookAt(player.transform.position);
+                    this.onRange = true;
+                    this.canFollow = false;
+                    Atack();
                 }
+                if (distance > atackRange)
+                {
+                    this.onRange = false;
+                    this.canFollow = true;
+                }
+            }
+            else
+            {
+                canFollow = false;
+            }
+        }
+    }
+
+
+    private void MeleeAtack()
+    {
+        
+        if (!this.AtkInCooldown)
+        {
+            Debug.Log($"Warrior atack");
+            this.weapon.gameObject.GetComponent<Collider>().isTrigger = true;
+            this.AtkInCooldown = true;
+            //AnimationController.SetBool("isAttacking", true);
+            this.RemainingCD = this.atkCooldown;
+        }
+        else if (RemainingCD < 1f)
+        {
+            //AnimationController.SetBool("isAttacking", false);
+            this.weapon.gameObject.GetComponent<Collider>().isTrigger = false;
+        }
+    }
+
+    private void LongRangeAtack()
+    {
+        Debug.Log($"Archer atack");
+    }
+
+    #endregion
+
+    #region ProtectedMethods
+
+    protected override void Atack()
+    {
+        base.Atack();
+        switch (enemyClass)
+        {
+            case CharClass.Warrior:
+                MeleeAtack();
                 break;
             case CharClass.Archer:
-                if (distance < followRange)
-                {
-                    if (!onRange)
-                    {
-                        this.canFollow = true;
-                        Quaternion newRotation = Quaternion.LookRotation(vectorDir);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
-                        transform.position += vectorDir.normalized * Time.deltaTime * speed;
-                    }
-                    if (distance <= atackRange)
-                    {
-                        //transform.LookAt(-2 * transform.position - player.transform.position);
-                        //Quaternion.LookRotation(player.transform.position, transform.position);
-                        //transform.rotation = Quaternion.Euler(Vector3.up * 180f);
-                        this.onRange = true;
-                        this.canFollow = false;
-                        Debug.Log("ATACKING");
-                    }
-                    if (distance > atackRange)
-                    {
-                        this.onRange = false;
-                        this.canFollow = true;
-                    }
-                }
-                else
-                {
-                    this.canFollow = false;
-                }
+                LongRangeAtack();
+                break;
+            default:
                 break;
         }
     }
+
+    #endregion
 }
 

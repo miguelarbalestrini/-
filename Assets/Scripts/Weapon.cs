@@ -36,15 +36,11 @@ public class Weapon : MonoBehaviour
 
     #region UnityMethods
 
-    private void OnCollisionEnter(Collision collision)
+    private void makeDamage(Creature target)
     {
-        if (collision.gameObject.TryGetComponent(out EnemyController enemy))
+        if (target != null)
         {
-            Debug.Log($"DAMAGE:  {this.Damage}");
-            if (enemy != null)
-            {
-                enemy.GetDamaged(this.Damage);
-            }
+            target.GetDamaged(this.Damage);
         }
     }
 
@@ -53,10 +49,11 @@ public class Weapon : MonoBehaviour
         if (other.gameObject.TryGetComponent(out EnemyController enemy))
         {
             Debug.Log($"DAMAGE:  {this.Damage}");
-            if (enemy != null)
-            {
-                enemy.GetDamaged(this.Damage);
-            }
+            makeDamage(enemy);
+        }
+        else if (other.gameObject.TryGetComponent(out Kingslayer player))
+        {
+            makeDamage(player);
         }
     }
 
