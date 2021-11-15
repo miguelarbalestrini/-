@@ -7,7 +7,7 @@ public class Creature : MonoBehaviour
     #region Fields
 
     [SerializeField]
-    private int health;
+    private float health;
     [SerializeField]
     private enum charClass {Warrior, Mage};
     [SerializeField]
@@ -90,7 +90,7 @@ public class Creature : MonoBehaviour
         if(this.atkInCooldown && this.remainingCD >= 0)
         {
             this.remainingCD -= Time.deltaTime;
-            Debug.Log($"creature log cd remaining {remainingCD}");
+            //Debug.Log($"creature log cd remaining {remainingCD}");
         }
         if(this.remainingCD <= 0)
         {
@@ -104,20 +104,11 @@ public class Creature : MonoBehaviour
 
     protected virtual void Atack() {}
 
-    protected void GetDamaged(int damage)
-    {
-        this.health -= damage;
-        if (this.health >= 0)
-        {
-            this.Die();
-            this.Respawn();
-        }
-    }
-
     protected void Die()
     {
         this.isAlive = false;
-        Destroy(this);
+        Debug.Log($"Dead: {this.health}");
+        Destroy(gameObject);
         Respawn();
     }
 
@@ -125,5 +116,16 @@ public class Creature : MonoBehaviour
 
     #region PublicMethods
 
+    public void GetDamaged(float damage)
+    {
+        this.health -= damage;
+        if (this.health <= 0)
+        {
+
+            Debug.Log($"Health: {this.health}");
+            this.Die();
+            this.Respawn();
+        }
+    }
     #endregion
 }

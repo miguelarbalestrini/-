@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private bool grounded = true;
     [SerializeField]
-    private TextMesh pickText;        
+    private TextMesh pickText = null;        
 
     #endregion
 
@@ -32,6 +32,34 @@ public class Weapon : MonoBehaviour
     {
         get { return pickText; }
     }
+    #endregion
+
+    #region UnityMethods
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out EnemyController enemy))
+        {
+            Debug.Log($"DAMAGE:  {this.Damage}");
+            if (enemy != null)
+            {
+                enemy.GetDamaged(this.Damage);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out EnemyController enemy))
+        {
+            Debug.Log($"DAMAGE:  {this.Damage}");
+            if (enemy != null)
+            {
+                enemy.GetDamaged(this.Damage);
+            }
+        }
+    }
+
     #endregion
 
     #region PublicMethod

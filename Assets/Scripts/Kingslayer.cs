@@ -28,7 +28,7 @@ public class Kingslayer : Creature
 
     private void OnTriggerEnter(Collider other)
     {
-        if (weapon.IsGrounded)
+        if (weapon.IsGrounded && weapon.PickText != null)
         {
             weapon.PickText.gameObject.SetActive(true);
             weapon.PickText.text = "Press E to pick weapon";
@@ -47,7 +47,7 @@ public class Kingslayer : Creature
 
     private void OnTriggerExit(Collider other)
     {
-        if (weapon.IsGrounded)
+        if (weapon.IsGrounded && weapon.PickText != null)
         {
             weapon.PickText.gameObject.SetActive(false);
         }
@@ -62,7 +62,7 @@ public class Kingslayer : Creature
         base.Atack();
         if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
-            Debug.Log($"atack");
+            //Debug.Log($"atack");
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
@@ -71,7 +71,6 @@ public class Kingslayer : Creature
             AnimationController.SetBool("isAttacking", false);
         }
     }
-
 
     #endregion
 
