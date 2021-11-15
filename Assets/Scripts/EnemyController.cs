@@ -103,7 +103,7 @@ public class EnemyController : Creature
                 }
                 if (distance <= atackRange)
                 {
-                    transform.LookAt(player.transform.position);
+                   transform.LookAt(player.transform.position);
                     this.onRange = true;
                     this.canFollow = false;
                     Atack();
@@ -142,7 +142,9 @@ public class EnemyController : Creature
 
     private void LongRangeAtack()
     {
-        Debug.Log($"Archer atack");
+        //Debug.Log($"Archer atack");
+        this.weapon.Range = this.atackRange;
+
     }
 
     #endregion

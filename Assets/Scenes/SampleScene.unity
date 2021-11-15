@@ -451,6 +451,7 @@ MonoBehaviour:
   damage: 10
   grounded: 0
   pickText: {fileID: 0}
+  range: 0
 --- !u!1001 &1206839957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -536,6 +537,28 @@ PrefabInstance:
       objectReference: {fileID: 142492387}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+--- !u!1 &1360145160 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3917162075131439619, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+  m_PrefabInstance: {fileID: 7813470962048349934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1360145163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360145160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c1cb7932e277345bbfe53305364834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 100
+  grounded: 0
+  pickText: {fileID: 0}
+  range: 6
+  atackOrigin: {fileID: 1360145160}
 --- !u!1 &1746855246
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +802,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 142492381}
+    - target: {fileID: 9073378388370578226, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 1360145163}
     - target: {fileID: 9073378388370578226, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
       propertyPath: EnemyClass
       value: 2
