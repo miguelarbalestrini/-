@@ -14,6 +14,7 @@ public class EnemyController : Creature
     [SerializeField] private bool warrior = false;
     [SerializeField] private bool archer = true;
     [SerializeField] private CharClass EnemyClass;
+    private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
     private bool canFollow = false;
@@ -30,7 +31,9 @@ public class EnemyController : Creature
     {
         if (!canFollow)
         {
-            MoveEnemy();
+          
+          MoveEnemy();
+            
         }
         this.AtackCooldown();
         Aggro();
@@ -42,8 +45,13 @@ public class EnemyController : Creature
 
         if (!this.atkInCooldown)
         {
-            transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
-            transform.position += transform.forward * speed * Time.deltaTime;
+            if (!onRange)
+            {
+                transform.position += transform.forward * speed * Time.deltaTime;
+                transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
+                Debug.Log("ACA TOY");
+            }
+          
         }
 
         if ( direction.magnitude < minDistance)
@@ -82,7 +90,7 @@ public class EnemyController : Creature
             case CharClass.Warrior:
                 if (distance < followRange)
                 {
-                    canFollow = true;
+                    this.canFollow = true;
                     Quaternion newRotation = Quaternion.LookRotation(vectorDir);
                     transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
                     transform.position += vectorDir.normalized * Time.deltaTime * speed;
@@ -95,25 +103,31 @@ public class EnemyController : Creature
             case CharClass.Archer:
                 if (distance < followRange)
                 {
-                    canFollow = true;
-                    Quaternion newRotation = Quaternion.LookRotation(vectorDir);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
-                    transform.position += vectorDir.normalized * Time.deltaTime * speed;
+                    if (!onRange)
+                    {
+                        this.canFollow = true;
+                        Quaternion newRotation = Quaternion.LookRotation(vectorDir);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
+                        transform.position += vectorDir.normalized * Time.deltaTime * speed;
+                    }
                     if (distance <= atackRange)
                     {
-                        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
-                        canFollow = false;
+                        //transform.LookAt(-2 * transform.position - player.transform.position);
+                        //Quaternion.LookRotation(player.transform.position, transform.position);
+                        //transform.rotation = Quaternion.Euler(Vector3.up * 180f);
+                        this.onRange = true;
+                        this.canFollow = false;
                         Debug.Log("ATACKING");
-
                     }
                     if (distance > atackRange)
                     {
-                        canFollow = true;
+                        this.onRange = false;
+                        this.canFollow = true;
                     }
                 }
                 else
                 {
-                    canFollow = false;
+                    this.canFollow = false;
                 }
                 break;
         }
