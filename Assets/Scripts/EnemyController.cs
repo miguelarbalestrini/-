@@ -9,6 +9,10 @@ public class EnemyController : Creature
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
     [SerializeField] private GameObject player;
+    [SerializeField] private float atackRange = 6f;
+    [SerializeField] private float pursueRange = 10f;
+    [SerializeField] private bool warrior = false;
+    [SerializeField] private bool archer = true;
     private int waypointIndex = 0;
     bool onRange;
     private bool goBack = false;
@@ -69,18 +73,42 @@ public class EnemyController : Creature
 
     private void Aggro()
     {
-        bool warrior = true;
-  
+       
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        Vector3 vectorDir = player.transform.position - transform.position;
+        
         if (warrior)
         {
-            Vector3 vectorDir = player.transform.position - transform.position;
-
-            if (Vector3.Distance(player.transform.position, transform.position) < 10f)
+            if (distance < pursueRange)
             {
                 canFollow = true;
                 Quaternion newRotation = Quaternion.LookRotation(vectorDir);
                 transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
                 transform.position += vectorDir.normalized * Time.deltaTime * speed;
+            }
+            else
+            {
+                canFollow = false;
+            }
+        }
+        else if (archer)
+        {
+            if (distance < pursueRange)
+            {
+                canFollow = true;
+                Quaternion newRotation = Quaternion.LookRotation(vectorDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
+                transform.position += vectorDir.normalized * Time.deltaTime * speed;
+                if (distance <= atackRange)
+                {
+                    canFollow = false;
+                    Debug.Log("ATACKING");
+
+                }
+                if (distance > atackRange)
+                {
+                    canFollow = true;
+                }
             }
             else
             {
