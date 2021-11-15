@@ -37,7 +37,7 @@ public class Creature : MonoBehaviour
         set { atkCooldown = value; }
     }
 
-    public bool AstkInCooldown
+    public bool AtkInCooldown
     {
         get { return atkInCooldown; }
         set { atkInCooldown = value; }
@@ -87,7 +87,7 @@ public class Creature : MonoBehaviour
 
     protected void AtackCooldown()
     {
-        if(this.atkInCooldown && this.remainingCD > 0)
+        if(this.atkInCooldown && this.remainingCD >= 0)
         {
             this.remainingCD -= Time.deltaTime;
             Debug.Log($"creature log cd remaining {remainingCD}");

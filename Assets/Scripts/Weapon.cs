@@ -41,6 +41,5 @@ public class Weapon : MonoBehaviour
         Destroy(gameObject);
     }
 
-
     #endregion
 }

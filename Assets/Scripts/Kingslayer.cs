@@ -60,18 +60,15 @@ public class Kingslayer : Creature
     protected override void Atack()
     {
         base.Atack();
-        if (Input.GetMouseButtonDown(0) && !this.AstkInCooldown)
+        if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
             Debug.Log($"atack");
-            this.AstkInCooldown = true;
-            // AnimationController.SetBool("isAttacking", true);
-            //} else
-            //{
-            //AnimationController.SetBool("isAttacking", false);
-        }
-        if (!this.AstkInCooldown)
-        {
+            this.AtkInCooldown = true;
+            AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
+        } else
+        {
+            AnimationController.SetBool("isAttacking", false);
         }
     }
 
