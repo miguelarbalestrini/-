@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class rangeWeapon : Weapon
 {
-    #region Fields
-
-    [SerializeField] private GameObject atackOrigin;
-
-    #endregion
-
-    #region UnityMethods
+   #region UnityMethods
 
     void FixedUpdate()
     {
@@ -24,20 +18,18 @@ public class rangeWeapon : Weapon
     private void makeLongDamage(float maxRange)
     {
         RaycastHit hit;
-        if (Physics.Raycast(atackOrigin.transform.position, atackOrigin.transform.TransformDirection(Vector3.forward), out hit, maxRange))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxRange))
         {
             if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
             {
-                Debug.DrawRay(atackOrigin.transform.position, atackOrigin.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                Debug.DrawRay(atackOrigin.transform.position, atackOrigin.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                Debug.Log("Did Hit");
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 this.makeDamage(player);
             }
         }
         else
         {
-            Debug.DrawRay(atackOrigin.transform.position, atackOrigin.transform.TransformDirection(Vector3.forward) * 1000, Color.red);
-            Debug.Log("Did not Hit");
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.red);
         }
     }
     #endregion
