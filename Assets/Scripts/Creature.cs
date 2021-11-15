@@ -9,7 +9,7 @@ public class Creature : MonoBehaviour
     [SerializeField]
     private float health;
     [SerializeField]
-    private enum charClass {Warrior, Mage};
+    protected enum CharClass {Warrior, Mage, Archer};
     [SerializeField]
     protected float atkCooldown;
     [SerializeField]
@@ -21,6 +21,7 @@ public class Creature : MonoBehaviour
     [SerializeField]
     private Animator animationControler;
     private float remainingCD;
+    
 
     #endregion
 
@@ -58,9 +59,8 @@ public class Creature : MonoBehaviour
     public Animator AnimationController
     {
         get { return animationControler; }
-        //set { animationControler = value; }
     }
-
+    
     #endregion
 
     #region UnityMethods
