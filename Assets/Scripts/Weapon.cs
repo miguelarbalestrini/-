@@ -14,6 +14,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] 
     private GameObject projectilePrefab;
     protected Vector3 targetPosition;
+    [SerializeField] Transform handposition;
+    [SerializeField] float arrowSpeed = 1;
+
 
     public Vector3 TargetPosition
     {
@@ -76,13 +79,13 @@ public class Weapon : MonoBehaviour
     public void MakeLongDamage(float maxRange)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxRange))
+        if (Physics.Raycast(handposition.transform.position, transform.TransformDirection(Vector3.forward), out hit, maxRange))
         {
             if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                GameObject projectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * 10f, ForceMode.Impulse);
+                Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
+                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
                 this.makeDamage(player);
             }
         }

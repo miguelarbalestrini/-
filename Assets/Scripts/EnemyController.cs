@@ -162,10 +162,10 @@ public class EnemyController : Creature
         if (!this.AtkInCooldown)
         {
             Debug.Log($"Archer atack");
-            AnimationController.SetBool("isArcher", true);
             this.AtkInCooldown = true;
             this.RemainingCD = this.atkCooldown;
             weapon.MakeLongDamage(this.atackRange);
+            AnimationController.SetBool("isArcher", true);
         }
         else if (RemainingCD < 1f)
         {

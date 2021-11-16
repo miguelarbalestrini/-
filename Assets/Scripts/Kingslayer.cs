@@ -8,6 +8,7 @@ public class Kingslayer : Creature
 
     [SerializeField]
     private Weapon weapon;
+    [SerializeField]
     private Weapon hiddenWeapon;
 
     #endregion
@@ -18,7 +19,7 @@ public class Kingslayer : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
-        hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
+        //hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
     }
 
     // Update is called once per frame
@@ -43,7 +44,7 @@ public class Kingslayer : Creature
         if (Input.GetKeyDown(KeyCode.E) && weapon.IsGrounded)
         {
             this.transform.GetChild(3).gameObject.SetActive(true);
-            this.transform.GetChild(4).gameObject.SetActive(true);
+            hiddenWeapon.gameObject.SetActive(true);
             //PickWeapon(hiddenWeapon);
             weapon.DestroyWeapon();
         }
