@@ -35,9 +35,11 @@ public class EnemyController : Creature
     {
         if (!canFollow)
         {
-          MoveEnemy(); 
+            MoveEnemy();
+            AnimationController.SetBool("isWalking", true);
         }
         this.AtackCooldown();
+        
         Aggro();
     }
 
@@ -56,9 +58,7 @@ public class EnemyController : Creature
                 transform.position += transform.forward * speed * Time.deltaTime;
                 transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
             }
-
         }
-
         if (direction.magnitude < minDistance)
         {
             this.AtkInCooldown = true;
@@ -66,12 +66,10 @@ public class EnemyController : Creature
 
             if (waypointIndex >= waypoints.Length - 1)
             {
-
                 goBack = true;
             }
             else if (waypointIndex <= 0)
             {
-
                 goBack = false;
             }
             if (!goBack)
@@ -104,6 +102,7 @@ public class EnemyController : Creature
                 if (distance <= atackRange)
                 {
                    transform.LookAt(player.transform.position);
+                    AnimationController.SetBool("isWalking", false);
                     this.onRange = true;
                     this.canFollow = false;
                     Atack();
@@ -127,15 +126,15 @@ public class EnemyController : Creature
         
         if (!this.AtkInCooldown)
         {
+            AnimationController.SetBool("isAttacking", true);
             Debug.Log($"Warrior atack");
             this.weapon.gameObject.GetComponent<Collider>().isTrigger = true;
             this.AtkInCooldown = true;
-            //AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
         }
         else if (RemainingCD < 1f)
         {
-            //AnimationController.SetBool("isAttacking", false);
+            AnimationController.SetBool("isAttacking", false);
             this.weapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
@@ -157,6 +156,7 @@ public class EnemyController : Creature
         switch (enemyClass)
         {
             case CharClass.Warrior:
+
                 MeleeAtack();
                 break;
             case CharClass.Archer:
