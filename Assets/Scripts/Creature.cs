@@ -20,6 +20,8 @@ public class Creature : MonoBehaviour
     private float respawnTime;
     [SerializeField]
     private Animator animationControler;
+    [SerializeField]
+    protected TextMesh lifeText = null;
     private float remainingCD;
     
 
@@ -119,6 +121,10 @@ public class Creature : MonoBehaviour
 
     public void GetDamaged(float damage)
     {
+        if (this.lifeText != null)
+        {
+            this.lifeText.text = this.health.ToString();
+        }
         this.health -= damage;
         if (this.health <= 0)
         {
