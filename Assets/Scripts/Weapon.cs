@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviour
     private bool grounded = true;
     [SerializeField]
     private TextMesh pickText = null;
+    [SerializeField] 
+    private GameObject projectilePrefab;
     protected Vector3 targetPosition;
 
     public Vector3 TargetPosition
@@ -53,7 +55,7 @@ public class Weapon : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out EnemyController enemy))
         {
-            Debug.Log($"DAMAGE:  {this.Damage}");
+            //Debug.Log($"DAMAGE:  {this.Damage}");
             makeDamage(enemy);
         }
         else if (other.gameObject.TryGetComponent(out Kingslayer player))
@@ -79,8 +81,9 @@ public class Weapon : MonoBehaviour
             if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                GameObject projectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * 10f, ForceMode.Impulse);
                 this.makeDamage(player);
-
             }
         }
     }

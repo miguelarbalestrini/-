@@ -108,7 +108,7 @@ public class Creature : MonoBehaviour
     protected void Die()
     {
         this.isAlive = false;
-        Debug.Log($"Dead: {this.health}");
+        //Debug.Log($"Dead: {this.health}");
         Destroy(gameObject);
         Respawn();
     }
@@ -123,7 +123,7 @@ public class Creature : MonoBehaviour
         if (this.health <= 0)
         {
 
-            Debug.Log($"Health: {this.health}");
+            //Debug.Log($"Health: {this.health}");
             this.Die();
             this.Respawn();
         }
