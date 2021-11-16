@@ -15,6 +15,9 @@ public class EnemyController : Creature
     [SerializeField] private float followRange = 10f;
     [SerializeField] private CharClass enemyClass;
     [SerializeField] private Weapon weapon;
+    [SerializeField] private float movementCD;
+    [SerializeField] private bool movementInCD = false;
+    private float remainingMovementCD;
     private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
@@ -28,6 +31,7 @@ public class EnemyController : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
+        this.remainingMovementCD = this.movementCD;
     }
 
     // Update is called once per frame
@@ -39,7 +43,7 @@ public class EnemyController : Creature
             AnimationController.SetBool("isWalking", true);
         }
         this.AtackCooldown();
-        
+        MovementCooldown();
         Aggro();
     }
 
@@ -51,7 +55,7 @@ public class EnemyController : Creature
     {
         Vector3 direction = waypoints[waypointIndex].position - transform.position;
 
-        if (!this.atkInCooldown)
+        if (!this.movementInCD)
         {
             if (!onRange)
             {
@@ -61,8 +65,8 @@ public class EnemyController : Creature
         }
         if (direction.magnitude < minDistance)
         {
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
+            this.movementInCD = true;
+            this.remainingMovementCD = this.movementCD;
 
             if (waypointIndex >= waypoints.Length - 1)
             {
@@ -80,6 +84,19 @@ public class EnemyController : Creature
             {
                 waypointIndex--;
             }
+        }
+    }
+
+    private void MovementCooldown()
+    {
+        if (this.movementInCD && this.remainingMovementCD >= 0)
+        {
+            this.remainingMovementCD -= Time.deltaTime;
+            //Debug.Log($"creature log cd remaining {remainingCD}");
+        }
+        if (this.remainingMovementCD <= 0)
+        {
+            this.movementInCD = false;
         }
     }
 
@@ -109,6 +126,7 @@ public class EnemyController : Creature
                 }
                 if (distance > atackRange)
                 {
+                    AnimationController.SetBool("isWalking", true);
                     this.onRange = false;
                     this.canFollow = true;
                 }
@@ -141,10 +159,19 @@ public class EnemyController : Creature
 
     private void LongRangeAtack()
     {
-        //Debug.Log($"Archer atack");
-        AnimationController.SetBool("isArcher", true);
-        //AnimationController.SetBool("isArcher", false);
-        this.weapon.Range = this.atackRange;
+        if (!this.AtkInCooldown)
+        {
+            Debug.Log($"Archer atack");
+            AnimationController.SetBool("isArcher", true);
+            this.AtkInCooldown = true;
+            this.RemainingCD = this.atkCooldown;
+            weapon.MakeLongDamage(this.atackRange);
+        }
+        else if (RemainingCD < 1f)
+        {
+            AnimationController.SetBool("isArcher", false);
+            //AnimationController.SetBool("isAttacking", false);
+        }
     }
 
     #endregion

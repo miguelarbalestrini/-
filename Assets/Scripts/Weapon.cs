@@ -12,17 +12,10 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private TextMesh pickText = null;
     protected Vector3 targetPosition;
-    [SerializeField]
-    protected float range;
 
     public Vector3 TargetPosition
     {
         set { this.targetPosition = value; }
-    }
-
-    public float Range
-    {
-        set { this.range = value; }
     }
 
     #endregion
@@ -76,6 +69,20 @@ public class Weapon : MonoBehaviour
     public void DestroyWeapon()
     {
         Destroy(gameObject);
+    }
+
+    public void MakeLongDamage(float maxRange)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxRange))
+        {
+            if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+                this.makeDamage(player);
+
+            }
+        }
     }
 
     #endregion
