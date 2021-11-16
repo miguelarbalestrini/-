@@ -460,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: a59764d3fb1f13a4c9dc5f35d4cc2c6b, type: 2}
     - target: {fileID: 7373869394174429967, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 8770169168736955566, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_Name
@@ -468,7 +468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8770169168736955566, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8770169168736955567, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_RootOrder
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c1cb7932e277345bbfe53305364834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 0
   grounded: 0
   pickText: {fileID: 0}
   range: 6
@@ -677,6 +677,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad62a16957ac2447aad64a11d461108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1971614581 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3206994200069471010, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+  m_PrefabInstance: {fileID: 7813470962048349934}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6298071565252593581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -753,13 +758,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3206994200069471010, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a59764d3fb1f13a4c9dc5f35d4cc2c6b, type: 2}
     - target: {fileID: 8770169168736955566, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
     - target: {fileID: 8770169168736955566, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8770169168736955567, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
       propertyPath: m_RootOrder
@@ -809,6 +818,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.063
       objectReference: {fileID: 0}
+    - target: {fileID: 9073378388370578225, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 9073378388370578226, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
       propertyPath: Class
       value: 1
@@ -829,6 +842,10 @@ PrefabInstance:
       propertyPath: enemyClass
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9073378388370578226, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
+      propertyPath: animationControler
+      value: 
+      objectReference: {fileID: 1971614581}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc933be91d0f87e459f01304edf9c0f8, type: 3}
 --- !u!1001 &8213880916864829323

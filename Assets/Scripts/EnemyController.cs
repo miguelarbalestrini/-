@@ -142,8 +142,9 @@ public class EnemyController : Creature
     private void LongRangeAtack()
     {
         //Debug.Log($"Archer atack");
+        AnimationController.SetBool("isArcher", true);
+        //AnimationController.SetBool("isArcher", false);
         this.weapon.Range = this.atackRange;
-
     }
 
     #endregion
@@ -156,7 +157,6 @@ public class EnemyController : Creature
         switch (enemyClass)
         {
             case CharClass.Warrior:
-
                 MeleeAtack();
                 break;
             case CharClass.Archer:
