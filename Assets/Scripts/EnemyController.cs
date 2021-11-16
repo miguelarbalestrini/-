@@ -45,6 +45,7 @@ public class EnemyController : Creature
         this.AtackCooldown();
         MovementCooldown();
         Aggro();
+        this.RenderHP();
     }
 
     #endregion

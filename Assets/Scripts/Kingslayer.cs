@@ -27,6 +27,7 @@ public class Kingslayer : Creature
     {
         Atack();
         this.AtackCooldown();
+        this.RenderHP();
         //Debug.Log(RemainingCD);
     }
 

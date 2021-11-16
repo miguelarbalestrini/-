@@ -76,7 +76,6 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
     }
 
     #endregion
@@ -121,17 +120,21 @@ public class Creature : MonoBehaviour
 
     public void GetDamaged(float damage)
     {
-        if (this.lifeText != null)
-        {
-            this.lifeText.text = this.health.ToString();
-        }
+        
         this.health -= damage;
         if (this.health <= 0)
         {
-
             //Debug.Log($"Health: {this.health}");
             this.Die();
             this.Respawn();
+        }
+    }
+
+    public void RenderHP()
+    {
+        if (this.lifeText != null)
+        {
+            this.lifeText.text = $"HP: {this.health.ToString()}";
         }
     }
     #endregion

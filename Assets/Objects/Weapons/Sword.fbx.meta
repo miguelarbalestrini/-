@@ -3,7 +3,12 @@ guid: 650d8f4b11f039044a0749e0b391b494
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paladin_MAT
+    second: {fileID: 2100000, guid: 997c384bd2016e841bef5dde02b89e55, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
