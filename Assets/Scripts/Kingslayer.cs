@@ -19,7 +19,7 @@ public class Kingslayer : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
-        //hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
+        hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
     }
 
     // Update is called once per frame
@@ -46,7 +46,7 @@ public class Kingslayer : Creature
         {
             this.transform.GetChild(3).gameObject.SetActive(true);
             hiddenWeapon.gameObject.SetActive(true);
-            //PickWeapon(hiddenWeapon);
+            PickWeapon(hiddenWeapon);
             weapon.DestroyWeapon();
         }
     }
@@ -77,7 +77,7 @@ public class Kingslayer : Creature
         } else if (RemainingCD < 1f){
             this.weapon.MakeLongDamage(6f);
             AnimationController.SetBool("isAttacking", false);
-           // this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
+           //this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 

@@ -90,12 +90,16 @@ public class Weapon : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(handposition.transform.position, transform.TransformDirection(Vector3.forward), out hit, maxRange))
         {
+            Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
+            GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
+            projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
             if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
             {
-                Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
-                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
                 this.makeDamage(player);
+            }
+            if (hit.transform.gameObject.TryGetComponent(out EnemyController enemy))
+            {
+                this.makeDamage(enemy);
             }
         }
     }

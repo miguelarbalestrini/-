@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1908914324634186022}
   - component: {fileID: 3044140079739407754}
   m_Layer: 0
-  m_Name: Erika_Archer_Arrow_Mesh
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
