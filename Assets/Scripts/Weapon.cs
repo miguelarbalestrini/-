@@ -60,10 +60,19 @@ public class Weapon : MonoBehaviour
         {
             //Debug.Log($"DAMAGE:  {this.Damage}");
             makeDamage(enemy);
+            GameManager.score += 1;
+            GameManager.instance.AddScore();
+            Debug.Log($"Score {GameManager.GetScore()}");
         }
         else if (other.gameObject.TryGetComponent(out Kingslayer player))
         {
             makeDamage(player);
+            if (!IsGrounded)
+            {
+                GameManager.score -= 1;
+                GameManager.instance.SubsScore();
+                Debug.Log($"Score {GameManager.GetScore()}");
+            }
         }
     }
 
