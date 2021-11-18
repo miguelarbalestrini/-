@@ -799,6 +799,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.0000051538277
       objectReference: {fileID: 0}
+    - target: {fileID: 6197853323648681665, guid: aabd7be5710469046898f5d775b6da8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6298071564499798759, guid: aabd7be5710469046898f5d775b6da8e, type: 3}
       propertyPath: damage
       value: 0
@@ -939,6 +943,10 @@ PrefabInstance:
     - target: {fileID: 8213880916402527235, guid: eddba5c9e7e241048923c0027285f029, type: 3}
       propertyPath: m_Name
       value: PickWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213880916402527235, guid: eddba5c9e7e241048923c0027285f029, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eddba5c9e7e241048923c0027285f029, type: 3}

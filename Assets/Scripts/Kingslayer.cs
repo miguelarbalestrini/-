@@ -69,13 +69,15 @@ public class Kingslayer : Creature
         if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
             //Debug.Log($"atack");
-            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
+            //this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
+            this.weapon.MakeLongDamage(6f);
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
         } else if (RemainingCD < 1f){
+            this.weapon.MakeLongDamage(6f);
             AnimationController.SetBool("isAttacking", false);
-            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
+           // this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
