@@ -10,6 +10,8 @@ public class Kingslayer : Creature
     private Weapon weapon;
     [SerializeField]
     private Weapon hiddenWeapon;
+    [SerializeField] private ItemController item;
+    [SerializeField] private Weapon[] ArrayWeapons;
 
     #endregion
 
@@ -19,7 +21,6 @@ public class Kingslayer : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
-        hiddenWeapon = this.transform.GetChild(4).gameObject.GetComponent<Weapon>();
     }
 
     // Update is called once per frame
@@ -28,34 +29,16 @@ public class Kingslayer : Creature
         Atack();
         this.AtackCooldown();
         this.RenderHP();
-        //Debug.Log(RemainingCD);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (weapon.IsGrounded && weapon.PickText != null)
-        {
-            weapon.PickText.gameObject.SetActive(true);
-            weapon.PickText.text = "Press E to pick weapon";
-        }
+        this.ChangeWeapon();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E) && weapon.IsGrounded)
+        if (Input.GetKeyDown(KeyCode.E) && item.ItemIsGrounded())
         {
             this.transform.GetChild(3).gameObject.SetActive(true);
             hiddenWeapon.gameObject.SetActive(true);
-            PickWeapon(hiddenWeapon);
-            weapon.DestroyWeapon();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (weapon.IsGrounded && weapon.PickText != null)
-        {
-            weapon.PickText.gameObject.SetActive(false);
+            item.DestroyItem();
         }
     }
 
@@ -81,14 +64,22 @@ public class Kingslayer : Creature
         }
     }
 
-    #endregion
-
-    #region PrivateMethods
-
-    private void PickWeapon(Weapon newWeapon)
+    private void ChangeWeapon()
     {
-        this.weapon = newWeapon;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            this.transform.GetChild(3).gameObject.SetActive(true);
+            ArrayWeapons[1].gameObject.SetActive(true);
+            ArrayWeapons[2].gameObject.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            this.transform.GetChild(3).gameObject.SetActive(false);
+            ArrayWeapons[1].gameObject.SetActive(false);
+            ArrayWeapons[2].gameObject.SetActive(true);
+        }
     }
+
 
     #endregion
 }

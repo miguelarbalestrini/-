@@ -17,7 +17,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform handposition;
     [SerializeField] float arrowSpeed = 1;
 
-
     public Vector3 TargetPosition
     {
         set { this.targetPosition = value; }
@@ -79,11 +78,6 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region PublicMethod
-
-    public void DestroyWeapon()
-    {
-        Destroy(gameObject);
-    }
 
     public void MakeLongDamage(float maxRange)
     {
