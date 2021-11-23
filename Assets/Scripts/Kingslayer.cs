@@ -13,6 +13,9 @@ public class Kingslayer : Creature
     [SerializeField] private ItemController item;
     [SerializeField] private Weapon[] ArrayWeapons;
 
+    //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
+
+
     #endregion
 
     #region UnityMethods
@@ -79,7 +82,5 @@ public class Kingslayer : Creature
             ArrayWeapons[2].gameObject.SetActive(true);
         }
     }
-
-
     #endregion
 }
