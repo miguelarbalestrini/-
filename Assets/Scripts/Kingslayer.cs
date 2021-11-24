@@ -12,9 +12,9 @@ public class Kingslayer : Creature
     private Weapon hiddenWeapon;
     [SerializeField] private ItemController item;
     [SerializeField] private Weapon[] ArrayWeapons;
-
+    [SerializeField] private HealthBar healtBar;
+    private float maxHealt;
     //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
-
 
     #endregion
 
@@ -24,6 +24,8 @@ public class Kingslayer : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
+        maxHealt = this.Health;
+        healtBar.SetMaxHealth(maxHealt);
     }
 
     // Update is called once per frame
@@ -31,7 +33,8 @@ public class Kingslayer : Creature
     {
         Atack();
         this.AtackCooldown();
-        this.RenderHP();
+        //this.RenderHP();
+        UpdateHealtBar();
         this.ChangeWeapon();
     }
 
@@ -55,15 +58,15 @@ public class Kingslayer : Creature
         if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
             //Debug.Log($"atack");
-            //this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
-            this.weapon.MakeLongDamage(6f);
+            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
+            //this.weapon.MakeLongDamage(6f);
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
         } else if (RemainingCD < 1f){
-            this.weapon.MakeLongDamage(6f);
+            //this.weapon.MakeLongDamage(6f);
             AnimationController.SetBool("isAttacking", false);
-           //this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
+           this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
@@ -81,6 +84,10 @@ public class Kingslayer : Creature
             ArrayWeapons[1].gameObject.SetActive(false);
             ArrayWeapons[2].gameObject.SetActive(true);
         }
+    }
+    private void UpdateHealtBar()
+    {
+        healtBar.SetHealth(this.Health);
     }
     #endregion
 }
