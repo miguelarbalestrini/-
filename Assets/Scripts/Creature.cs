@@ -7,7 +7,7 @@ public class Creature : MonoBehaviour
     #region Fields
 
     [SerializeField]
-    private float health;
+    protected float health;
     [SerializeField]
     protected enum CharClass {Warrior, Mage, Archer};
     [SerializeField]

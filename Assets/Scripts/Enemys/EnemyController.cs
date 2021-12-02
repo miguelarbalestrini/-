@@ -7,16 +7,17 @@ public class EnemyController : Creature
     #region Fields
 
     [SerializeField] private Transform[] waypoints;
-    [SerializeField] private float speed;
+    //[SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
     [SerializeField] private GameObject player;
-    [SerializeField] private float atackRange = 6f;
-    [SerializeField] private float followRange = 10f;
+    //[SerializeField] private float atackRange = 6f;
+    //[SerializeField] private float followRange = 10f;
     [SerializeField] private CharClass enemyClass;
     [SerializeField] private Weapon weapon;
-    [SerializeField] private float movementCD;
-    [SerializeField] private bool movementInCD = false;
+    //[SerializeField] private float movementCD;
+    [SerializeField] protected EnemyData myEnemyData;
+    private bool movementInCD = false;
     private float remainingMovementCD;
     private bool onRange = false;
     private int waypointIndex = 0;
@@ -31,7 +32,7 @@ public class EnemyController : Creature
     void Start()
     {
         this.RemainingCD = this.atkCooldown;
-        this.remainingMovementCD = this.movementCD;
+        this.remainingMovementCD = myEnemyData.MovementCD;
     }
 
     // Update is called once per frame
@@ -60,14 +61,14 @@ public class EnemyController : Creature
         {
             if (!onRange)
             {
-                transform.position += transform.forward * speed * Time.deltaTime;
+                transform.position += transform.forward * myEnemyData.Speed * Time.deltaTime;
                 transform.forward = Vector3.Lerp(transform.forward, direction.normalized, rotationSpeed * Time.deltaTime);
             }
         }
         if (direction.magnitude < minDistance)
         {
             this.movementInCD = true;
-            this.remainingMovementCD = this.movementCD;
+            this.remainingMovementCD = myEnemyData.MovementCD;
 
             if (waypointIndex >= waypoints.Length - 1)
             {
@@ -108,16 +109,16 @@ public class EnemyController : Creature
             float distance = Vector3.Distance(player.transform.position, transform.position);
             Vector3 vectorDir = player.transform.position - transform.position;
 
-            if (distance < followRange)
+            if (distance < myEnemyData.FollowRange)
             {
                 if (!onRange)
                 {
                     this.canFollow = true;
                     Quaternion newRotation = Quaternion.LookRotation(vectorDir);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, speed * Time.deltaTime);
-                    transform.position += vectorDir.normalized * Time.deltaTime * speed;
+                    transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, myEnemyData.Speed * Time.deltaTime);
+                    transform.position += vectorDir.normalized * Time.deltaTime * myEnemyData.Speed;
                 }
-                if (distance <= atackRange)
+                if (distance <= myEnemyData.AttackRange)
                 {
                    transform.LookAt(player.transform.position);
                     AnimationController.SetBool("isWalking", false);
@@ -125,7 +126,7 @@ public class EnemyController : Creature
                     this.canFollow = false;
                     Atack();
                 }
-                if (distance > atackRange)
+                if (distance > myEnemyData.AttackRange)
                 {
                     AnimationController.SetBool("isWalking", true);
                     this.onRange = false;
@@ -165,7 +166,7 @@ public class EnemyController : Creature
             Debug.Log($"Archer atack");
             this.AtkInCooldown = true;
             this.RemainingCD = this.atkCooldown;
-            weapon.MakeLongDamage(this.atackRange);
+            weapon.MakeLongDamage(myEnemyData.AttackRange);
             AnimationController.SetBool("isArcher", true);
         }
         else if (RemainingCD < 1f)
@@ -188,7 +189,7 @@ public class EnemyController : Creature
                 MeleeAtack();
                 break;
             case CharClass.Archer:
-                LongRangeAtack();
+                //LongRangeAtack();
                 break;
             default:
                 break;
