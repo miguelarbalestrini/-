@@ -54,9 +54,9 @@ public class Kingslayer : Creature
 
     protected override void Atack()
     {
-        base.Atack();
         if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
         {
+            base.Atack();
             //Debug.Log($"atack");
             this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
             //this.weapon.MakeLongDamage(6f);

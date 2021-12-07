@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public Kingslayer player;
     // Start is called before the first frame update
 
     //SCORE
@@ -29,7 +30,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        player.onHit += SubsScore;
+        player.onAtack += AddScore;
     }
 
     // Update is called once per frame

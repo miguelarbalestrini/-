@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Creature : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class Creature : MonoBehaviour
     protected TextMesh lifeText = null;
     private float remainingCD;
     public GameEvent dead;
-    
+    public event Action onHit;
+    public event Action onAtack;
+
 
     #endregion
 
@@ -117,7 +120,10 @@ public class Creature : MonoBehaviour
 
     #region ProtectedMethods
 
-    protected virtual void Atack() {}
+    protected virtual void Atack() 
+    {
+        this.onAtack();
+    }
 
     protected void Die()
     {
@@ -136,6 +142,11 @@ public class Creature : MonoBehaviour
     {
         
         this.health -= damage;
+        if (gameObject.TryGetComponent(out Kingslayer player))
+        {
+            player.onHit();
+        }
+           
         if (this.health <= 0)
         {
             //Debug.Log($"Health: {this.health}");

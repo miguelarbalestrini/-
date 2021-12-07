@@ -182,7 +182,6 @@ public class EnemyController : Creature
 
     protected override void Atack()
     {
-        base.Atack();
         switch (enemyClass)
         {
             case CharClass.Warrior:
