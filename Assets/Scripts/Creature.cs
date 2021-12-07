@@ -23,6 +23,7 @@ public class Creature : MonoBehaviour
     [SerializeField]
     protected TextMesh lifeText = null;
     private float remainingCD;
+    public GameEvent dead;
     
 
     #endregion
@@ -102,15 +103,28 @@ public class Creature : MonoBehaviour
 
     #endregion
 
+    void onDead()
+    {
+        if (dead != null) {
+            Debug.Log(dead);
+            dead.Raise();
+            Debug.Log("soy un unity event");
+        }
+
+        Debug.Log(dead);
+        Debug.Log("soy un unity event null");
+    }
+
     #region ProtectedMethods
 
     protected virtual void Atack() {}
 
     protected void Die()
     {
+        onDead();
         this.isAlive = false;
         //Debug.Log($"Dead: {this.health}");
-        Destroy(gameObject);
+        //Destroy(gameObject);
         Respawn();
     }
 
