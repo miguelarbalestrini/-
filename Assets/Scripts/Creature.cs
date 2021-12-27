@@ -7,22 +7,17 @@ public class Creature : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]
-    protected float health;
-    [SerializeField]
-    protected enum CharClass {Warrior, Mage, Archer};
-    [SerializeField]
-    protected float atkCooldown;
-    [SerializeField]
-    protected bool atkInCooldown = false;
-    [SerializeField]
-    private bool isAlive = true;
-    [SerializeField]
-    private float respawnTime;
-    [SerializeField]
-    private Animator animationControler;
-    [SerializeField]
-    protected TextMesh lifeText = null;
+    [SerializeField] protected enum CharClass {Warrior, Mage, Archer};
+    [SerializeField] protected float health;
+    [SerializeField] protected float atkCooldown;
+    [SerializeField] protected bool atkInCooldown = false;
+    [SerializeField] private bool isAlive = true;
+    [SerializeField] private float respawnTime;
+    [SerializeField] private Animator animationControler;
+    [SerializeField] protected TextMesh lifeText = null;
+    /*[SerializeField] private GameObject orbs;
+    [SerializeField] private int points = 10;
+    private Orb orb;*/
     private float remainingCD;
     public GameEvent dead;
 
@@ -73,6 +68,9 @@ public class Creature : MonoBehaviour
     void Start()
     {
         this.remainingCD = this.atkCooldown;
+        /*OrbsSpawn Orbs = orbs.GetComponent<OrbsSpawn>();
+        orb = Orbs.GetComponent<Orb>();
+        Orbs.NumOrbsToSpawn = pointToOrbs();*/
     }
 
     // Update is called once per frame
@@ -129,9 +127,15 @@ public class Creature : MonoBehaviour
         onDead();
         this.isAlive = false;
         //Debug.Log($"Dead: {this.health}");
-        //Destroy(gameObject);
+        Destroy(gameObject);
         Respawn();
     }
+
+    /*private int pointToOrbs()
+    {
+        int totalOrbs = points / orb.OrbPoints;
+        return totalOrbs;
+    }*/
 
     #endregion
 
@@ -152,6 +156,7 @@ public class Creature : MonoBehaviour
             //Debug.Log($"Health: {this.health}");
             this.Die();
             this.Respawn();
+            //orb.gameObject.SetActive(true);
         }
     }
 

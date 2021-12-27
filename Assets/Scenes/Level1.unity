@@ -1561,14 +1561,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7149893937602530078, guid: 368c853126c72c5498b0181db735977b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7149893937926658250, guid: 368c853126c72c5498b0181db735977b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.063
-      objectReference: {fileID: 0}
     - target: {fileID: 7149893938527902602, guid: 368c853126c72c5498b0181db735977b, type: 3}
       propertyPath: m_Name
       value: Enemy2 Variant
@@ -1625,18 +1617,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 142492381}
-    - target: {fileID: 7485815620451726088, guid: 368c853126c72c5498b0181db735977b, type: 3}
-      propertyPath: myEnemyData
-      value: 
-      objectReference: {fileID: 11400000, guid: a8a94ba94fa39e440b6f2c0d60daf4c0, type: 2}
-    - target: {fileID: 7485815620451726088, guid: 368c853126c72c5498b0181db735977b, type: 3}
-      propertyPath: rotationSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8996327172145609771, guid: 368c853126c72c5498b0181db735977b, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 368c853126c72c5498b0181db735977b, type: 3}
 --- !u!1 &1630393457

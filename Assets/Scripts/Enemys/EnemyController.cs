@@ -33,6 +33,7 @@ public class EnemyController : Creature
     {
         this.RemainingCD = this.atkCooldown;
         this.remainingMovementCD = myEnemyData.MovementCD;
+
     }
 
     // Update is called once per frame
