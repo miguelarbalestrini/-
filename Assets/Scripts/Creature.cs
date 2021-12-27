@@ -25,8 +25,6 @@ public class Creature : MonoBehaviour
     protected TextMesh lifeText = null;
     private float remainingCD;
     public GameEvent dead;
-    public event Action onHit;
-    public event Action onAtack;
 
 
     #endregion
@@ -122,7 +120,8 @@ public class Creature : MonoBehaviour
 
     protected virtual void Atack() 
     {
-        this.onAtack();
+        //this.onAtack();
+      EventManager.RaiseEvent("onAtack");
     }
 
     protected void Die()
@@ -144,7 +143,8 @@ public class Creature : MonoBehaviour
         this.health -= damage;
         if (gameObject.TryGetComponent(out Kingslayer player))
         {
-            player.onHit();
+            //player.onHit();
+          EventManager.RaiseEvent("onHit");
         }
            
         if (this.health <= 0)
