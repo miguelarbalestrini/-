@@ -30,8 +30,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        player.onHit += SubsScore;
-        player.onAtack += AddScore;
+        EventManager.StartListening("onHit", SubsScore);
+        EventManager.StartListening("onAtack", AddScore);
+        //player.onHit += SubsScore;
+        //player.onAtack += AddScore;
     }
 
     // Update is called once per frame
