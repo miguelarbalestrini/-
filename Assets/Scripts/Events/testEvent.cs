@@ -8,18 +8,18 @@ public class testEvent : MonoBehaviour
     //private Action<EventParam> someListener1;
     //private Action<EventParam> someListener2;
     //private Action<EventParam> someListener3;
-    private event Action someListener1;
-    private event Action someListener2;
-    private event Action someListener3;
+    private event Action<EventParam> someListener1;
+    private event Action<EventParam> someListener2;
+    private event Action<EventParam> someListener3;
 
     void Awake()
     {
         //someListener1 = new Action<EventParam>(SomeFunction);
         //someListener2 = new Action<EventParam>(SomeOtherFunction);
         //someListener3 = new Action<EventParam>(SomeThirdFunction);
-        someListener1 = new Action(SomeFunction);
-        someListener2 = new Action(SomeOtherFunction);
-        someListener3 = new Action(SomeThirdFunction);
+      //someListener1 = new Action<EventParam>(SomeFunction);
+        //someListener2 = new Action(SomeOtherFunction);
+        //someListener3 = new Action(SomeThirdFunction);
 
         StartCoroutine(invokeTest());
     }
@@ -27,11 +27,13 @@ public class testEvent : MonoBehaviour
     IEnumerator invokeTest()
     {
         WaitForSeconds waitTime = new WaitForSeconds(0.5f);
+        EventParam eventParam = new EventParam();
+        eventParam.stingParam= "Hello";
 
         while (true)
         {
             yield return waitTime;
-            EventManager.RaiseEvent("test");
+            EventManager.RaiseEvent("test", eventParam);
             yield return waitTime;
             EventManager.RaiseEvent("Spawn");
             yield return waitTime;
@@ -42,9 +44,9 @@ public class testEvent : MonoBehaviour
     void OnEnable()
     {
         //Register With Action variable
-        EventManager.StartListening("test", someListener1);
-        EventManager.StartListening("Spawn", someListener2);
-        EventManager.StartListening("Destroy", someListener3);
+      //EventManager.StartListening("test", someListener1);
+        //EventManager.StartListening("Spawn", someListener2);
+        //EventManager.StartListening("Destroy", someListener3);
 
         //OR Register Directly to function
         EventManager.StartListening("test", SomeFunction);
@@ -61,17 +63,17 @@ public class testEvent : MonoBehaviour
      
     }
 
-    void SomeFunction()
+    void SomeFunction(EventParam eventParam)
     {
-        Debug.Log("Some Function was called!");
-    }
+        Debug.Log($"Function was called! + { eventParam.stingParam}");
 
-    void SomeOtherFunction()
+    }
+    void SomeOtherFunction(EventParam eventParam)
     {
         Debug.Log("Some Other Function was called!");
     }
 
-    void SomeThirdFunction()
+    void SomeThirdFunction(EventParam eventParam)
     {
         Debug.Log("Some Third Function was called!");
     }

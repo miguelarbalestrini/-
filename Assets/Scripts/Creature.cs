@@ -121,7 +121,7 @@ public class Creature : MonoBehaviour
     protected virtual void Atack() 
     {
         //this.onAtack();
-        EventManager.RaiseEvent("onAtack");
+      EventManager.RaiseEvent("onAtack");
     }
 
     protected void Die()
@@ -144,7 +144,7 @@ public class Creature : MonoBehaviour
         if (gameObject.TryGetComponent(out Kingslayer player))
         {
             //player.onHit();
-            EventManager.RaiseEvent("onHit");
+          EventManager.RaiseEvent("onHit");
         }
            
         if (this.health <= 0)

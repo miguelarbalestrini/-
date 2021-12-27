@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        EventManager.StartListening("onHit", SubsScore);
-        EventManager.StartListening("onAtack", AddScore);
+      EventManager.StartListening("onHit", SubsScore);
+      EventManager.StartListening("onAtack", AddScore);
         //player.onHit += SubsScore;
         //player.onAtack += AddScore;
     }
@@ -42,12 +42,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void AddScore()
+    public void AddScore(EventParam eventParam)
     {
         instance.scoreInstanciado += 1;
     }
 
-    public void SubsScore()
+    public void SubsScore(EventParam eventParam)
     {
         instance.scoreInstanciado -= 1;  
     }
