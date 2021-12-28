@@ -189,7 +189,7 @@ public class EnemyController : Creature
                 MeleeAtack();
                 break;
             case CharClass.Archer:
-                //LongRangeAtack();
+                LongRangeAtack();
                 break;
             default:
                 break;

@@ -105,29 +105,21 @@ public class Creature : MonoBehaviour
     void onDead()
     {
         if (dead != null) {
-            Debug.Log(dead);
             dead.Raise();
-            Debug.Log("soy un unity event");
         }
-
-        Debug.Log(dead);
-        Debug.Log("soy un unity event null");
     }
 
     #region ProtectedMethods
 
     protected virtual void Atack() 
     {
-        //this.onAtack();
-      EventManager.RaiseEvent("onAtack");
+        EventManager.RaiseEvent("onAtack");
     }
 
     protected void Die()
     {
         onDead();
         this.isAlive = false;
-        //Debug.Log($"Dead: {this.health}");
-        //Destroy(gameObject);
         gameObject.SetActive(false);
         Respawn();
     }
@@ -144,30 +136,23 @@ public class Creature : MonoBehaviour
 
     protected virtual void GetDamaged(EventParam eventParam)
     {
-        Debug.Log($"Target: { eventParam.gameObjParam }, NOMBRE: { eventParam.gameObjParam.name }");
-        Debug.Log($"SOY: { this.gameObject}, NOMBRE: { this.gameObject }");
-        Debug.Log("NO ES NULL");
         if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
             float damage = eventParam.floatParam;
             this.health -= damage;
-            // Debug.Log($"VIDA: { health }, DAÑO: { damage }");
             if (this.health <= 0)
             {
-                //Debug.Log($"Health: {this.health}");
                 this.Die();
                 this.Respawn();
-                //orb.gameObject.SetActive(true);
             }
         }
-   
     }
 
     public void RenderHP()
     {
         if (this.lifeText != null)
         {
-            this.lifeText.text = $"HP: {this.health.ToString()}";
+            this.lifeText.text = $"HP: {this.health}";
         }
     }
     #endregion

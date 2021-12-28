@@ -54,30 +54,14 @@ public class Weapon : MonoBehaviour
             eventParam.floatParam = this.damage;
             EventManager.RaiseEvent("onDamaged", eventParam);
         }
-        //EventManager.RaiseEvent("onDamaged");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       
         if (other.gameObject != null)
         {
-            makeDamage(other.gameObject);
+            this.makeDamage(other.gameObject);
         }
-       // if (other.gameObject.TryGetComponent(out EnemyController enemy))
-        //{
-            //Debug.Log($"DAMAGE:  {this.Damage}");
-         //;   makeDamage(enemy);
-           // Debug.Log($"Score {GameManager.GetScore()}");
-        //}
-        //else if (other.gameObject.TryGetComponent(out Kingslayer player))
-        //{
-          //  makeDamage(player);
-           // if (!IsGrounded)
-            //{
-             //   Debug.Log($"Score {GameManager.GetScore()}");
-            //}
-        //}
     }
 
     #endregion
@@ -92,14 +76,7 @@ public class Weapon : MonoBehaviour
             Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
             GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
-            if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
-            {
-                //this.makeDamage(player);
-            }
-            if (hit.transform.gameObject.TryGetComponent(out EnemyController enemy))
-            {
-                //this.makeDamage(enemy);
-            }
+            this.makeDamage(hit.transform.gameObject);
         }
     }
 

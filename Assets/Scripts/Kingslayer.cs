@@ -60,12 +60,12 @@ public class Kingslayer : Creature
             base.Atack();
             //Debug.Log($"atack");
             this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
-            //this.weapon.MakeLongDamage(6f);
+            this.weapon.MakeLongDamage(6f);
             this.AtkInCooldown = true;
             AnimationController.SetBool("isAttacking", true);
             this.RemainingCD = this.atkCooldown;
         } else if (RemainingCD < 1f){
-            //this.weapon.MakeLongDamage(6f);
+            this.weapon.MakeLongDamage(6f);
             AnimationController.SetBool("isAttacking", false);
             this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
@@ -97,8 +97,6 @@ public class Kingslayer : Creature
         base.GetDamaged(eventParam);
         if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
-            //Debug.Log($"DAMAGE:  {this.Damage}");
-            //Debug.Log($"Score {GameManager.GetScore()}");
             EventManager.RaiseEvent("onHit");
         }
     }
