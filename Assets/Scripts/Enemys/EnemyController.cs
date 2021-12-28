@@ -33,7 +33,7 @@ public class EnemyController : Creature
     {
         this.RemainingCD = this.atkCooldown;
         this.remainingMovementCD = myEnemyData.MovementCD;
-
+        EventManager.StartListening("onDamaged", this.GetDamaged);
     }
 
     // Update is called once per frame

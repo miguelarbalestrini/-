@@ -45,30 +45,39 @@ public class Weapon : MonoBehaviour
 
     #region UnityMethods
 
-    protected void makeDamage(Creature target)
+    protected void makeDamage(GameObject target)
     {
+        EventParam eventParam = new EventParam();
         if (target != null)
         {
-            target.GetDamaged(this.Damage);
+            eventParam.gameObjParam = target;
+            eventParam.floatParam = this.damage;
+            EventManager.RaiseEvent("onDamaged", eventParam);
         }
+        //EventManager.RaiseEvent("onDamaged");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyController enemy))
+       
+        if (other.gameObject != null)
         {
+            makeDamage(other.gameObject);
+        }
+       // if (other.gameObject.TryGetComponent(out EnemyController enemy))
+        //{
             //Debug.Log($"DAMAGE:  {this.Damage}");
-            makeDamage(enemy);
-            Debug.Log($"Score {GameManager.GetScore()}");
-        }
-        else if (other.gameObject.TryGetComponent(out Kingslayer player))
-        {
-            makeDamage(player);
-            if (!IsGrounded)
-            {
-                Debug.Log($"Score {GameManager.GetScore()}");
-            }
-        }
+         //;   makeDamage(enemy);
+           // Debug.Log($"Score {GameManager.GetScore()}");
+        //}
+        //else if (other.gameObject.TryGetComponent(out Kingslayer player))
+        //{
+          //  makeDamage(player);
+           // if (!IsGrounded)
+            //{
+             //   Debug.Log($"Score {GameManager.GetScore()}");
+            //}
+        //}
     }
 
     #endregion
@@ -85,11 +94,11 @@ public class Weapon : MonoBehaviour
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
             if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
             {
-                this.makeDamage(player);
+                //this.makeDamage(player);
             }
             if (hit.transform.gameObject.TryGetComponent(out EnemyController enemy))
             {
-                this.makeDamage(enemy);
+                //this.makeDamage(enemy);
             }
         }
     }

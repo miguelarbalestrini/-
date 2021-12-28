@@ -26,6 +26,7 @@ public class Kingslayer : Creature
         this.RemainingCD = this.atkCooldown;
         maxHealt = this.Health;
         healtBar.SetMaxHealth(maxHealt);
+        EventManager.StartListening("onDamaged", this.GetDamaged);
     }
 
     // Update is called once per frame
@@ -66,7 +67,7 @@ public class Kingslayer : Creature
         } else if (RemainingCD < 1f){
             //this.weapon.MakeLongDamage(6f);
             AnimationController.SetBool("isAttacking", false);
-           this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
+            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
@@ -90,4 +91,15 @@ public class Kingslayer : Creature
         healtBar.SetHealth(this.Health);
     }
     #endregion
+
+    protected override void GetDamaged(EventParam eventParam)
+    {
+        base.GetDamaged(eventParam);
+        if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
+        {
+            //Debug.Log($"DAMAGE:  {this.Damage}");
+            //Debug.Log($"Score {GameManager.GetScore()}");
+            EventManager.RaiseEvent("onHit");
+        }
+    }
 }

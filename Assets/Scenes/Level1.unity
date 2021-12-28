@@ -827,7 +827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7149893938527902602, guid: 368c853126c72c5498b0181db735977b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7149893938527902603, guid: 368c853126c72c5498b0181db735977b, type: 3}
       propertyPath: m_RootOrder
@@ -1561,6 +1561,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1913010332385356252, guid: 368c853126c72c5498b0181db735977b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7149893938527902602, guid: 368c853126c72c5498b0181db735977b, type: 3}
       propertyPath: m_Name
       value: Enemy2 Variant

@@ -127,7 +127,8 @@ public class Creature : MonoBehaviour
         onDead();
         this.isAlive = false;
         //Debug.Log($"Dead: {this.health}");
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
         Respawn();
     }
 
@@ -141,23 +142,25 @@ public class Creature : MonoBehaviour
 
     #region PublicMethods
 
-    public void GetDamaged(float damage)
+    protected virtual void GetDamaged(EventParam eventParam)
     {
-        
-        this.health -= damage;
-        if (gameObject.TryGetComponent(out Kingslayer player))
+        Debug.Log($"Target: { eventParam.gameObjParam }, NOMBRE: { eventParam.gameObjParam.name }");
+        Debug.Log($"SOY: { this.gameObject}, NOMBRE: { this.gameObject }");
+        Debug.Log("NO ES NULL");
+        if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
-            //player.onHit();
-          EventManager.RaiseEvent("onHit");
+            float damage = eventParam.floatParam;
+            this.health -= damage;
+            // Debug.Log($"VIDA: { health }, DAÑO: { damage }");
+            if (this.health <= 0)
+            {
+                //Debug.Log($"Health: {this.health}");
+                this.Die();
+                this.Respawn();
+                //orb.gameObject.SetActive(true);
+            }
         }
-           
-        if (this.health <= 0)
-        {
-            //Debug.Log($"Health: {this.health}");
-            this.Die();
-            this.Respawn();
-            //orb.gameObject.SetActive(true);
-        }
+   
     }
 
     public void RenderHP()
