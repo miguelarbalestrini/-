@@ -91,11 +91,13 @@ public class Creature : MonoBehaviour
     {
         if(this.atkInCooldown && this.remainingCD >= 0)
         {
+            //Debug.Log(remainingCD);
             this.remainingCD -= Time.deltaTime;
             //Debug.Log($"creature log cd remaining {remainingCD}");
         }
         if(this.remainingCD <= 0)
         {
+           // Debug.Log("CD EN FALSE");
             this.atkInCooldown = false;
         }
     }
@@ -111,7 +113,7 @@ public class Creature : MonoBehaviour
 
     #region ProtectedMethods
 
-    protected virtual void Atack() 
+    protected virtual void Atack(EventParam eventParam) 
     {
         EventManager.RaiseEvent("onAtack");
     }

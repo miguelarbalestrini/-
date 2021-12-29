@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     protected Vector3 targetPosition;
     [SerializeField] Transform handposition;
     [SerializeField] float arrowSpeed = 1;
+    [SerializeField] bool isMelee = true;
+
 
     public Vector3 TargetPosition
     {
@@ -44,6 +46,13 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region UnityMethods
+    private void Start()
+    {
+        if (isMelee && gameObject.TryGetComponent(out Collider weapon))
+            {
+                weapon.isTrigger = false;
+            }
+    }
 
     protected void makeDamage(GameObject target)
     {
@@ -80,5 +89,16 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    public void MakeMeleeDamage()
+    {
+        gameObject.GetComponent<Collider>().isTrigger = true;
+        StartCoroutine(DeactivateWeapon());
+
+    }
+    private IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.0001f);
+        gameObject.GetComponent<Collider>().isTrigger = false;
+    }
     #endregion
 }

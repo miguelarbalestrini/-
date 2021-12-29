@@ -17,6 +17,7 @@ public class EnemyController : Creature
     [SerializeField] private Weapon weapon;
     //[SerializeField] private float movementCD;
     [SerializeField] protected EnemyData myEnemyData;
+    private Timer coodownTimer;
     private bool movementInCD = false;
     private float remainingMovementCD;
     private bool onRange = false;
@@ -31,6 +32,7 @@ public class EnemyController : Creature
     // Start is called before the first frame update
     void Start()
     {
+        coodownTimer = new Timer();
         this.RemainingCD = this.atkCooldown;
         this.remainingMovementCD = myEnemyData.MovementCD;
         EventManager.StartListening("onDamaged", this.GetDamaged);
@@ -125,7 +127,7 @@ public class EnemyController : Creature
                     AnimationController.SetBool("isWalking", false);
                     this.onRange = true;
                     this.canFollow = false;
-                    Atack();
+                    Atack(new EventParam ());
                 }
                 if (distance > myEnemyData.AttackRange)
                 {
@@ -144,19 +146,22 @@ public class EnemyController : Creature
 
     private void MeleeAtack()
     {
-        
+        //if (!coodownTimer.Running)
+        Debug.Log(coodownTimer.Running);
         if (!this.AtkInCooldown)
         {
+            coodownTimer.Duration = atkCooldown;
+            coodownTimer.Run();
+            Debug.Log("ADENTRO");
             AnimationController.SetBool("isAttacking", true);
             Debug.Log($"Warrior atack");
-            this.weapon.gameObject.GetComponent<Collider>().isTrigger = true;
+            this.weapon.MakeMeleeDamage();
             this.AtkInCooldown = true;
             this.RemainingCD = this.atkCooldown;
         }
-        else if (RemainingCD < 1f)
+        else
         {
             AnimationController.SetBool("isAttacking", false);
-            this.weapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
@@ -181,7 +186,7 @@ public class EnemyController : Creature
 
     #region ProtectedMethods
 
-    protected override void Atack()
+    protected override void Atack(EventParam eventParam)
     {
         switch (enemyClass)
         {
