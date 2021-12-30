@@ -44,7 +44,6 @@ public class EnemyController : Creature
             AnimationController.SetBool("isWalking", true);
         }
         this.Aggro();
-        this.RenderHP();
     }
 
     #endregion

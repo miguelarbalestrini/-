@@ -100,15 +100,4 @@ public class Creature : MonoBehaviour
     }
 
     #endregion
-
-    #region PublicMethods
-
-    public void RenderHP()
-    {
-        if (this.lifeText != null)
-        {
-            this.lifeText.text = $"HP: {this.health}";
-        }
-    }
-    #endregion
 }
