@@ -7,19 +7,12 @@ public class EnemyController : Creature
     #region Fields
 
     [SerializeField] private Transform[] waypoints;
-    //[SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
     [SerializeField] private GameObject player;
-    //[SerializeField] private float atackRange = 6f;
-    //[SerializeField] private float followRange = 10f;
     [SerializeField] private CharClass enemyClass;
     [SerializeField] private Weapon weapon;
-    //[SerializeField] private float movementCD;
     [SerializeField] protected EnemyData myEnemyData;
-    private Timer coodownTimer;
-    private bool movementInCD = false;
-    private float remainingMovementCD;
     private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
@@ -30,12 +23,16 @@ public class EnemyController : Creature
     #region UnityMethods
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        coodownTimer = new Timer();
-        this.RemainingCD = this.atkCooldown;
-        this.remainingMovementCD = myEnemyData.MovementCD;
-        EventManager.StartListening("onDamaged", this.GetDamaged);
+        base.Awake();
+        movementCDTimer = gameObject.AddComponent<Timer>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        movementCDTimer.Duration = myEnemyData.MovementCD;
     }
 
     // Update is called once per frame
@@ -46,9 +43,7 @@ public class EnemyController : Creature
             MoveEnemy();
             AnimationController.SetBool("isWalking", true);
         }
-        this.AtackCooldown();
-        MovementCooldown();
-        Aggro();
+        this.Aggro();
         this.RenderHP();
     }
 
@@ -60,8 +55,9 @@ public class EnemyController : Creature
     {
         Vector3 direction = waypoints[waypointIndex].position - transform.position;
 
-        if (!this.movementInCD)
+        if (!movementCDTimer.Running)
         {
+            movementCDTimer.Run();
             if (!onRange)
             {
                 transform.position += transform.forward * myEnemyData.Speed * Time.deltaTime;
@@ -70,8 +66,7 @@ public class EnemyController : Creature
         }
         if (direction.magnitude < minDistance)
         {
-            this.movementInCD = true;
-            this.remainingMovementCD = myEnemyData.MovementCD;
+            movementCDTimer.Duration = 1f;
 
             if (waypointIndex >= waypoints.Length - 1)
             {
@@ -89,19 +84,6 @@ public class EnemyController : Creature
             {
                 waypointIndex--;
             }
-        }
-    }
-
-    private void MovementCooldown()
-    {
-        if (this.movementInCD && this.remainingMovementCD >= 0)
-        {
-            this.remainingMovementCD -= Time.deltaTime;
-            //Debug.Log($"creature log cd remaining {remainingCD}");
-        }
-        if (this.remainingMovementCD <= 0)
-        {
-            this.movementInCD = false;
         }
     }
 
@@ -127,7 +109,7 @@ public class EnemyController : Creature
                     AnimationController.SetBool("isWalking", false);
                     this.onRange = true;
                     this.canFollow = false;
-                    Atack(new EventParam ());
+                    Atack();
                 }
                 if (distance > myEnemyData.AttackRange)
                 {
@@ -143,42 +125,34 @@ public class EnemyController : Creature
         }
     }
 
-
     private void MeleeAtack()
     {
-        //if (!coodownTimer.Running)
-        Debug.Log(coodownTimer.Running);
-        if (!this.AtkInCooldown)
+        if (!this.attackCDTimer.Running)
         {
-            coodownTimer.Duration = atkCooldown;
-            coodownTimer.Run();
-            Debug.Log("ADENTRO");
-            AnimationController.SetBool("isAttacking", true);
-            Debug.Log($"Warrior atack");
+            this.attackCDTimer.Run();
             this.weapon.MakeMeleeDamage();
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
+            AnimationController.SetBool("isAttacking", true);
         }
-        else
+        else if (this.attackCDTimer.SecondsLeft < 1f)
         {
-            AnimationController.SetBool("isAttacking", false);
+            this.attackCDTimer.Duration = this.atkCooldown;
+            AnimationController.SetBool("isArcher", false);
         }
     }
 
     private void LongRangeAtack()
     {
-        if (!this.AtkInCooldown)
+        
+        if (!this.attackCDTimer.Running)
         {
-            Debug.Log($"Archer atack");
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
+            this.attackCDTimer.Run();
             weapon.MakeLongDamage(myEnemyData.AttackRange);
             AnimationController.SetBool("isArcher", true);
         }
-        else if (RemainingCD < 1f)
+        else if (this.attackCDTimer.SecondsLeft <= 1f)
         {
+            this.attackCDTimer.Duration = atkCooldown;
             AnimationController.SetBool("isArcher", false);
-            //AnimationController.SetBool("isAttacking", false);
         }
     }
 
@@ -186,7 +160,7 @@ public class EnemyController : Creature
 
     #region ProtectedMethods
 
-    protected override void Atack(EventParam eventParam)
+    protected override void Atack()
     {
         switch (enemyClass)
         {

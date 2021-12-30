@@ -14,7 +14,6 @@ public class Kingslayer : Creature
     [SerializeField] private Weapon[] ArrayWeapons;
     [SerializeField] private HealthBar healtBar;
     private float maxHealt;
-    private bool isMelee = false;
     //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
 
     #endregion
@@ -22,21 +21,19 @@ public class Kingslayer : Creature
     #region UnityMethods
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        this.RemainingCD = this.atkCooldown;
+        base.Start();
         maxHealt = this.Health;
         healtBar.SetMaxHealth(maxHealt);
-        EventManager.StartListening("onDamaged", this.GetDamaged);
-        EventManager.StartListening("onLeftClick", this.Atack);
+        //EventManager.StartListening("onLeftClick", this.Atack);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Atack(new EventParam());
+        this.Atack();
         //this.resetEstance();
-        this.AtackCooldown();
         //this.RenderHP();
         UpdateHealtBar();
         this.ChangeWeapon();
@@ -56,15 +53,15 @@ public class Kingslayer : Creature
 
     #region ProtectedMethods
 
-    protected override void Atack(EventParam eventParam)
+    protected override void Atack()
     {
-        Debug.Log($"cooldown: {AtkInCooldown}");
-        if (!this.AtkInCooldown)
+        if (Input.GetMouseButtonDown(0) && !this.attackCDTimer.Running)
         {
             Debug.Log("No Tengo cooldown");
-            base.Atack(new EventParam());
+            base.Atack();
+            this.attackCDTimer.Run();
             //Debug.Log($"atack");
-            if (isMelee)
+            if (this.weapon.IsMelee)
             {
                 this.hiddenWeapon.MakeMeleeDamage();
                 AnimationController.SetBool("isAttacking", true);
@@ -73,33 +70,29 @@ public class Kingslayer : Creature
             {
                 this.weapon.MakeLongDamage(6f);
             }
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
         } 
-        else
+        else if (this.attackCDTimer.SecondsLeft < 1f)
         {
+            this.attackCDTimer.Duration = this.atkCooldown;
             AnimationController.SetBool("isAttacking", false);
         }
-        Debug.Log($"REMAINING CD: {RemainingCD}");
     }
 
     private void ChangeWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            isMelee = true;
-            Debug.Log($"Melee: {isMelee}");
             this.transform.GetChild(3).gameObject.SetActive(true);
             ArrayWeapons[1].gameObject.SetActive(true);
             ArrayWeapons[2].gameObject.SetActive(false);
+            weapon = ArrayWeapons[1];
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            isMelee = false;
-            Debug.Log($"Melee: {isMelee}");
             this.transform.GetChild(3).gameObject.SetActive(false);
             ArrayWeapons[1].gameObject.SetActive(false);
             ArrayWeapons[2].gameObject.SetActive(true);
+            weapon = ArrayWeapons[2];
         }
     }
 
@@ -108,18 +101,6 @@ public class Kingslayer : Creature
         healtBar.SetHealth(this.Health);
     }
 
-    private void resetEstance()
-    {
-        if (this.AtkInCooldown)
-        {
-            AnimationController.SetBool("isAttacking", false);
-            if (isMelee)
-            {
-                this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
-            }
-        }
-        
-    }
     #endregion
 
     protected override void GetDamaged(EventParam eventParam)

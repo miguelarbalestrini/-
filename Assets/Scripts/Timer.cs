@@ -94,7 +94,6 @@ public class Timer : MonoBehaviour
         // update timer and check for finished
         if (running)
         {
-            Debug.Log(totalSeconds);
             elapsedSeconds += Time.deltaTime;
             if (elapsedSeconds >= totalSeconds)
             {

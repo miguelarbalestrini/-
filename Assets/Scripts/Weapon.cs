@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform handposition;
     [SerializeField] float arrowSpeed = 1;
     [SerializeField] bool isMelee = true;
+    Collider weapon;
 
 
     public Vector3 TargetPosition
@@ -39,6 +40,11 @@ public class Weapon : MonoBehaviour
         get { return grounded; }
     }
 
+    public bool IsMelee
+    {
+        get { return isMelee; }
+    }
+
     public TextMesh PickText
     {
         get { return pickText; }
@@ -48,10 +54,10 @@ public class Weapon : MonoBehaviour
     #region UnityMethods
     private void Start()
     {
-        if (isMelee && gameObject.TryGetComponent(out Collider weapon))
-            {
-                weapon.isTrigger = false;
-            }
+        if (isMelee && this.gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            meleeWeapon.isTrigger = false;
+        }
     }
 
     protected void makeDamage(GameObject target)
@@ -67,6 +73,7 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"ENCONTRADO: {other.gameObject.name}");
         if (other.gameObject != null)
         {
             this.makeDamage(other.gameObject);
@@ -91,13 +98,15 @@ public class Weapon : MonoBehaviour
 
     public void MakeMeleeDamage()
     {
-        gameObject.GetComponent<Collider>().isTrigger = true;
+        this.gameObject.GetComponent<Collider>().isTrigger = true;
+        Debug.Log("triger actgivo");
+        gameObject.SetActive(true);
         StartCoroutine(DeactivateWeapon());
 
     }
     private IEnumerator DeactivateWeapon()
     {
-        yield return new WaitForSeconds(0.0001f);
+        yield return new WaitForSeconds(0.7f);
         gameObject.GetComponent<Collider>().isTrigger = false;
     }
     #endregion
