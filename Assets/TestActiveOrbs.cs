@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TestActiveOrbs : MonoBehaviour
 {
-    [SerializeField] private float hp;
+    [SerializeField] private float maxHp;
     [SerializeField] private float damage;
     [SerializeField] private GameObject orbs;
     [SerializeField] private int points = 10;
     [SerializeField] private int orbValue = 2;
     private OrbsSpawn Orbs;
+    private float hp;
 
     public int Points
     {
@@ -21,10 +22,21 @@ public class TestActiveOrbs : MonoBehaviour
         get { return orbValue; }
     }
 
+    public float MaxHp
+    {
+        get { return maxHp; }
+    }
+
+    public float Hp
+    {
+        get { return hp; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         Orbs = orbs.GetComponent<OrbsSpawn>();
+        hp = maxHp;
     }
 
     // Update is called once per frame
@@ -41,7 +53,7 @@ public class TestActiveOrbs : MonoBehaviour
         if(hp <= 0)
         {
             Orbs.SpawnOrbs();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
