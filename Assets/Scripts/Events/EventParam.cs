@@ -8,4 +8,5 @@ public struct EventParam
     public int intParam;
     public float floatParam;
     public bool boolParam;
+    public GameObject gameObjParam;
 }

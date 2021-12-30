@@ -65,7 +65,7 @@ public class EventManager : MonoBehaviour
         Action<EventParam> thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
-            Debug.Log($"EVENT: {eventName}");
+            //Debug.Log($"EVENT: {eventName}");
             thisEvent.Invoke(eventParam);
 
         }

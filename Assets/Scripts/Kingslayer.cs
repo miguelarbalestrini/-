@@ -21,18 +21,19 @@ public class Kingslayer : Creature
     #region UnityMethods
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        this.RemainingCD = this.atkCooldown;
+        base.Start();
         maxHealt = this.Health;
         healtBar.SetMaxHealth(maxHealt);
+        //EventManager.StartListening("onLeftClick", this.Atack);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Atack();
-        this.AtackCooldown();
+        this.Atack();
+        //this.resetEstance();
         //this.RenderHP();
         UpdateHealtBar();
         this.ChangeWeapon();
@@ -54,19 +55,26 @@ public class Kingslayer : Creature
 
     protected override void Atack()
     {
-        if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
+        if (Input.GetMouseButtonDown(0) && !this.attackCDTimer.Running)
         {
+            Debug.Log("No Tengo cooldown");
             base.Atack();
+            this.attackCDTimer.Run();
             //Debug.Log($"atack");
-            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
-            //this.weapon.MakeLongDamage(6f);
-            this.AtkInCooldown = true;
-            AnimationController.SetBool("isAttacking", true);
-            this.RemainingCD = this.atkCooldown;
-        } else if (RemainingCD < 1f){
-            //this.weapon.MakeLongDamage(6f);
+            if (this.weapon.IsMelee)
+            {
+                this.hiddenWeapon.MakeMeleeDamage();
+                AnimationController.SetBool("isAttacking", true);
+            }
+            else
+            {
+                this.weapon.MakeLongDamage(6f);
+            }
+        } 
+        else if (this.attackCDTimer.SecondsLeft < 1f)
+        {
+            this.attackCDTimer.Duration = this.atkCooldown;
             AnimationController.SetBool("isAttacking", false);
-           this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
@@ -77,17 +85,30 @@ public class Kingslayer : Creature
             this.transform.GetChild(3).gameObject.SetActive(true);
             ArrayWeapons[1].gameObject.SetActive(true);
             ArrayWeapons[2].gameObject.SetActive(false);
+            weapon = ArrayWeapons[1];
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             this.transform.GetChild(3).gameObject.SetActive(false);
             ArrayWeapons[1].gameObject.SetActive(false);
             ArrayWeapons[2].gameObject.SetActive(true);
+            weapon = ArrayWeapons[2];
         }
     }
+
     private void UpdateHealtBar()
     {
         healtBar.SetHealth(this.Health);
     }
+
     #endregion
+
+    protected override void GetDamaged(EventParam eventParam)
+    {
+        base.GetDamaged(eventParam);
+        if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
+        {
+            EventManager.RaiseEvent("onHit");
+        }
+    }
 }

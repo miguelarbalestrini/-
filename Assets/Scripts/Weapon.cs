@@ -16,6 +16,9 @@ public class Weapon : MonoBehaviour
     protected Vector3 targetPosition;
     [SerializeField] Transform handposition;
     [SerializeField] float arrowSpeed = 1;
+    [SerializeField] bool isMelee = true;
+    Collider weapon;
+
 
     public Vector3 TargetPosition
     {
@@ -37,6 +40,11 @@ public class Weapon : MonoBehaviour
         get { return grounded; }
     }
 
+    public bool IsMelee
+    {
+        get { return isMelee; }
+    }
+
     public TextMesh PickText
     {
         get { return pickText; }
@@ -44,30 +52,31 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region UnityMethods
-
-    protected void makeDamage(Creature target)
+    private void Start()
     {
+        if (isMelee && this.gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            meleeWeapon.isTrigger = false;
+        }
+    }
+
+    protected void makeDamage(GameObject target)
+    {
+        EventParam eventParam = new EventParam();
         if (target != null)
         {
-            target.GetDamaged(this.Damage);
+            eventParam.gameObjParam = target;
+            eventParam.floatParam = this.damage;
+            EventManager.RaiseEvent("onDamaged", eventParam);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyController enemy))
+        Debug.Log($"ENCONTRADO: {other.gameObject.name}");
+        if (other.gameObject != null)
         {
-            //Debug.Log($"DAMAGE:  {this.Damage}");
-            makeDamage(enemy);
-            Debug.Log($"Score {GameManager.GetScore()}");
-        }
-        else if (other.gameObject.TryGetComponent(out Kingslayer player))
-        {
-            makeDamage(player);
-            if (!IsGrounded)
-            {
-                Debug.Log($"Score {GameManager.GetScore()}");
-            }
+            this.makeDamage(other.gameObject);
         }
     }
 
@@ -83,16 +92,22 @@ public class Weapon : MonoBehaviour
             Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
             GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
-            if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
-            {
-                this.makeDamage(player);
-            }
-            if (hit.transform.gameObject.TryGetComponent(out EnemyController enemy))
-            {
-                this.makeDamage(enemy);
-            }
+            this.makeDamage(hit.transform.gameObject);
         }
     }
 
+    public void MakeMeleeDamage()
+    {
+        this.gameObject.GetComponent<Collider>().isTrigger = true;
+        Debug.Log("triger actgivo");
+        gameObject.SetActive(true);
+        StartCoroutine(DeactivateWeapon());
+
+    }
+    private IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.7f);
+        gameObject.GetComponent<Collider>().isTrigger = false;
+    }
     #endregion
 }
