@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     //SCORE
     public static int score;
 
-    private int scoreInstanciado; 
+    private int scoreInstanciado;
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -30,10 +31,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-      EventManager.StartListening("onHit", SubsScore);
-      EventManager.StartListening("onAtack", AddScore);
-        //player.onHit += SubsScore;
-        //player.onAtack += AddScore;
+        EventManager.StartListening("onHit", SubsScore);
+        EventManager.StartListening("onAtack", AddScore);
+        EventManager.StartListening("onPause", PauseGame);
     }
 
     // Update is called once per frame
@@ -55,5 +55,27 @@ public class GameManager : MonoBehaviour
     public static int GetScore()
     {
         return instance.scoreInstanciado;
+    }
+
+    private void PauseGame(EventParam eventParam)
+    {
+        if(!isPaused)
+        {
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+        else
+        {
+            ResumeGame();
+        }
+    }
+
+    private void ResumeGame()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+        }
     }
 }

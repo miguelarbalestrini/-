@@ -13,6 +13,9 @@ namespace Invector.vCharacterController
         public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
+        public KeyCode setTargetInput = KeyCode.X;
+        public KeyCode rollInput = KeyCode.C;
+        public KeyCode pauseInput = KeyCode.Escape;
 
         [Header("Camera Input")]
         public string rotateCameraXInput = "Mouse X";
@@ -25,10 +28,22 @@ namespace Invector.vCharacterController
         private bool lockingEnemy = false;
         private EnemyController lockedEnemy;
         private bool strafing = false;
-        private new bool backwards = false;
+        private Vector3 move;
+
+        #region Rolling
+        private bool rolling = false;
+        public AnimationCurve rollSpeedCurve;
+        private float rollTimeSeconds = 1.15f;
+        private float rollCurrentTime = 0;
+        private Vector3 rollMove;
+
+        [Range(0.1f, 1.5f)]
+        public float rotationSpeed;
 
         #endregion
-       
+
+        #endregion
+
         protected virtual void Start()
         {
             InitilizeController();
@@ -82,10 +97,12 @@ namespace Invector.vCharacterController
         {
             MoveInput();
             CameraInput();
-            LockEnemy();
+            LockEnemyInput();
             SprintInput();
             StrafeInput();
-            JumpInput();  
+            JumpInput();
+            RollInput();
+            PauseInput();
         }
 
         public virtual void MoveInput()
@@ -103,6 +120,7 @@ namespace Invector.vCharacterController
                 {
                     cameraMain = Camera.main;
                     cc.rotateTarget = cameraMain.transform;
+                    UIManager.s.MainCamera = cameraMain;
                 }
             }
 
@@ -152,9 +170,9 @@ namespace Invector.vCharacterController
                 cc.Jump();
         }
 
-        void LockEnemy()
+        void LockEnemyInput()
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(setTargetInput))
             {
                 if (!lockingEnemy) // Lock
                 {
@@ -169,7 +187,6 @@ namespace Invector.vCharacterController
                 else
                 {  // Unlock 
                     lockingEnemy = false;
-                    backwards = false;
                     strafing = false;
                     lockedEnemy = null;
                     UIManager.s.UnlockEnemy();
@@ -200,6 +217,43 @@ namespace Invector.vCharacterController
             return result;
         }
 
+       private  void RollInput()
+        {
+            if (!rolling)
+            {
+                rolling = true;
+
+                rollMove = move;
+                cc.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(cc.transform.forward, move, rotationSpeed, 0.0f));
+                //cc.GetFullBodyAnimator().Play("Roll");
+                Invoke("EnableActions", rollTimeSeconds + 0.15f);
+                Debug.Log("ROLLING");
+            }
+            else
+            {
+                rollCurrentTime += Time.deltaTime;
+                float speed = rollSpeedCurve.Evaluate(rollCurrentTime / rollTimeSeconds) * 5.0f;
+
+                cc.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(cc.transform.forward, move, rotationSpeed, 0.0f));
+                transform.position += rollMove.normalized * speed * Time.deltaTime;
+                tpCamera.transform.position += rollMove.normalized * speed * Time.deltaTime;
+            }
+        }
+
+        private void EnableActions()
+        {
+            rolling = false;
+            rollCurrentTime = 0;
+        }
+
+        void PauseInput()
+        {
+           
+            if (Input.GetKeyDown(pauseInput))
+            {
+                EventManager.RaiseEvent("onPause");
+            }
+        }
         #endregion       
     }
 }
