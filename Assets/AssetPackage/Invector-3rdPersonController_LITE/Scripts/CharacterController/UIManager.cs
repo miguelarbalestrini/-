@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager s; // Singleton
 
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera mainCamera;
     [SerializeField] private Kingslayer player;
     private Image lockIcon;
     private EnemyController lockedEnemy;
@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
         lockIcon.enabled = false;
     }
 
+    public Camera  MainCamera
+    {
+        set { this.mainCamera = value; }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +33,10 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lockedEnemy)
+        if (lockedEnemy && mainCamera != null)
         {
-            lockIcon.rectTransform.position = camera.WorldToScreenPoint(lockedEnemy.Chest.position);
-            player.transform.LookAt(lockedEnemy.transform);
+            lockIcon.rectTransform.position = mainCamera.WorldToScreenPoint(lockedEnemy.Chest.position);
+           // player.transform.LookAt(lockedEnemy.transform);
         }
     }
 
@@ -47,5 +51,4 @@ public class UIManager : MonoBehaviour
         lockedEnemy = null;
         lockIcon.enabled = false;
     }
-
 }
