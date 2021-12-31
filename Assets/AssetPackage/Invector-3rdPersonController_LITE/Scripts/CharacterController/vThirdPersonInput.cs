@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Invector.vCharacterController
 {
@@ -21,8 +22,13 @@ namespace Invector.vCharacterController
         [HideInInspector] public vThirdPersonCamera tpCamera;
         [HideInInspector] public Camera cameraMain;
 
-        #endregion
+        private bool lockingEnemy = false;
+        private EnemyController lockedEnemy;
+        private bool strafing = false;
+        private new bool backwards = false;
 
+        #endregion
+       
         protected virtual void Start()
         {
             InitilizeController();
@@ -76,9 +82,10 @@ namespace Invector.vCharacterController
         {
             MoveInput();
             CameraInput();
+            LockEnemy();
             SprintInput();
             StrafeInput();
-            JumpInput();
+            JumpInput();  
         }
 
         public virtual void MoveInput()
@@ -143,6 +150,54 @@ namespace Invector.vCharacterController
         {
             if (Input.GetKeyDown(jumpInput) && JumpConditions())
                 cc.Jump();
+        }
+
+        void LockEnemy()
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                if (!lockingEnemy) // Lock
+                {
+                    lockedEnemy = FindClosestEnemy();
+                    if (lockedEnemy)
+                    {
+                        lockingEnemy = true;
+                        UIManager.s.LockEnemy(lockedEnemy);
+                        Debug.Log("Locking enemy");
+                    }
+                }
+                else
+                {  // Unlock 
+                    lockingEnemy = false;
+                    backwards = false;
+                    strafing = false;
+                    lockedEnemy = null;
+                    UIManager.s.UnlockEnemy();
+                }
+            }
+        }
+
+        private EnemyController FindClosestEnemy()
+        {
+            EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+            EnemyController result = null;
+            if (enemies.Length > 0)
+            {
+                float distanceToPlayer = Vector3.Distance(enemies[0].transform.position, transform.position);
+                float currentBest = distanceToPlayer;
+                int bestIndex = 0;
+                for (int i = 1; i < enemies.Length; ++i)
+                {
+                    distanceToPlayer = Vector3.Distance(enemies[i].transform.position, transform.position);
+                    if (distanceToPlayer < currentBest)
+                    {
+                        bestIndex = i;
+                        currentBest = distanceToPlayer;
+                    }
+                }
+                result = enemies[bestIndex];
+            }
+            return result;
         }
 
         #endregion       
