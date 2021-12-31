@@ -7,6 +7,7 @@ public class EnemyController : Creature
     #region Fields
 
     [SerializeField] private Transform[] waypoints;
+    [SerializeField] private Transform chest;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
     [SerializeField] private GameObject player;
@@ -17,6 +18,15 @@ public class EnemyController : Creature
     private int waypointIndex = 0;
     private bool goBack = false;
     private bool canFollow = false;
+
+    #endregion
+
+    #region Fields
+
+    public Transform Chest
+    {
+        get { return this.chest; }
+    }
 
     #endregion
 
