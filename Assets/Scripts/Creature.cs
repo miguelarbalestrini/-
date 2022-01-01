@@ -80,7 +80,7 @@ public class Creature : MonoBehaviour
         EventManager.RaiseEvent("onAtack");
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         this.OnDead();
         gameObject.SetActive(false);
@@ -90,6 +90,7 @@ public class Creature : MonoBehaviour
     {
         if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
+            //AudioManager.Play(AudioClipName.FreezerEffectDeactivated);
             float damage = eventParam.floatParam;
             this.health -= damage;
             if (this.health <= 0)
