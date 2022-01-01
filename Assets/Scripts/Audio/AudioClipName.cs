@@ -8,6 +8,9 @@ using UnityEngine;
 public enum AudioClipName
 {
     AtkSwing,
+    AtkImpact1,
+    AtkImpact2,
+    MeleeWeaponDraw,
     GameLost,
     Walk,
     BackgroundSurvival,

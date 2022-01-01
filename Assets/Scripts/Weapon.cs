@@ -98,6 +98,7 @@ public class Weapon : MonoBehaviour
 
     public void MakeMeleeDamage()
     {
+        AudioManager.Play(AudioClipName.AtkSwing);
         this.gameObject.GetComponent<Collider>().isTrigger = true;
         Debug.Log("triger actgivo");
         gameObject.SetActive(true);

@@ -31,6 +31,12 @@ public static class AudioManager
 
         audioClips.Add(AudioClipName.AtkSwing,
             Resources.Load<AudioClip>("AtkSwing"));
+        audioClips.Add(AudioClipName.AtkImpact1,
+           Resources.Load<AudioClip>("AtkImpact1"));
+        audioClips.Add(AudioClipName.AtkImpact2,
+          Resources.Load<AudioClip>("AtkImpact2"));
+        audioClips.Add(AudioClipName.MeleeWeaponDraw,
+     Resources.Load<AudioClip>("MeleeWeaponDraw"));
         audioClips.Add(AudioClipName.GameLost,
             Resources.Load<AudioClip>("GameLost"));
         audioClips.Add(AudioClipName.Walk,

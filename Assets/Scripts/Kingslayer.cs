@@ -59,7 +59,6 @@ public class Kingslayer : Creature
         {
             Debug.Log("No Tengo cooldown");
             base.Atack();
-            AudioManager.Play(AudioClipName.AtkSwing);
             this.attackCDTimer.Run();
             //Debug.Log($"atack");
             if (this.weapon.IsMelee)
@@ -82,6 +81,7 @@ public class Kingslayer : Creature
     protected override void Die()
     {
         base.Die();
+        AudioManager.Stop();
         AudioManager.Play(AudioClipName.GameLost);
     }
 
@@ -92,6 +92,7 @@ public class Kingslayer : Creature
             this.transform.GetChild(3).gameObject.SetActive(true);
             ArrayWeapons[1].gameObject.SetActive(true);
             ArrayWeapons[2].gameObject.SetActive(false);
+            AudioManager.Play(AudioClipName.MeleeWeaponDraw);
             weapon = ArrayWeapons[1];
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))

@@ -90,7 +90,7 @@ public class Creature : MonoBehaviour
     {
         if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
-            //AudioManager.Play(AudioClipName.FreezerEffectDeactivated);
+            AudioManager.Play(AudioClipName.AtkImpact1);
             float damage = eventParam.floatParam;
             this.health -= damage;
             if (this.health <= 0)
