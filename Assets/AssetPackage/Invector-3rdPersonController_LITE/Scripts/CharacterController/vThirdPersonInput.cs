@@ -109,6 +109,14 @@ namespace Invector.vCharacterController
         {
             cc.input.x = Input.GetAxis(horizontalInput);
             cc.input.z = Input.GetAxis(verticallInput);
+            if (cc.input.x != 0 || cc.input.z != 0)
+            {
+                AudioManager.PlayIfNotPlaying(AudioClipName.Walk);
+            } 
+            else
+            {
+                AudioManager.Pause(AudioClipName.Walk);
+            }
         }
 
         protected virtual void CameraInput()
@@ -147,9 +155,7 @@ namespace Invector.vCharacterController
         protected virtual void SprintInput()
         {
             if (Input.GetKeyDown(sprintInput))
-            {
                 cc.Sprint(true);
-            }
             else if (Input.GetKeyUp(sprintInput))
                 cc.Sprint(false);
         }

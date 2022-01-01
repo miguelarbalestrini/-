@@ -18,7 +18,8 @@ public class GameAudioSource : MonoBehaviour
         {
             // initialize audio manager and persist audio source across scenes
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-            AudioManager.Initialize(audioSource);
+            AudioSource auxAudioSource = gameObject.AddComponent<AudioSource>();
+            AudioManager.Initialize(audioSource, auxAudioSource);
             DontDestroyOnLoad(gameObject);
         }
         else

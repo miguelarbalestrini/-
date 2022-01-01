@@ -9,6 +9,7 @@ public static class AudioManager
 {
     static bool initialized = false;
     static AudioSource audioSource;
+    static AudioSource AuxAudioSource;
     static Dictionary<AudioClipName, AudioClip> audioClips =
         new Dictionary<AudioClipName, AudioClip>();
 
@@ -24,10 +25,11 @@ public static class AudioManager
     /// Initializes the audio manager
     /// </summary>
     /// <param name="source">audio source</param>
-    public static void Initialize(AudioSource source)
+    public static void Initialize(AudioSource source, AudioSource auxSource)
     {
         initialized = true;
         audioSource = source;
+        AuxAudioSource = auxSource;
 
         audioClips.Add(AudioClipName.AtkSwing,
             Resources.Load<AudioClip>("AtkSwing"));
@@ -69,5 +71,31 @@ public static class AudioManager
         audioSource.playOnAwake = true;
         audioSource.loop = true;
         audioSource.Play();
+    }
+
+    public static void PlayIfNotPlaying(AudioClipName name)
+    {
+      
+        if (AuxAudioSource.clip != audioClips[name])
+        {
+
+            AuxAudioSource.clip = audioClips[name];
+            if (!AuxAudioSource.isPlaying)
+            {
+                AuxAudioSource.Play();
+            }
+        }
+    }
+
+    public static void Pause(AudioClipName name)
+    {
+        if (AuxAudioSource.clip == audioClips[name] && AuxAudioSource.isPlaying)
+        {
+            AuxAudioSource.Stop();
+        }
+        else if (AuxAudioSource.clip == audioClips[name] && !AuxAudioSource.isPlaying)
+        {
+            AuxAudioSource.Play();
+        }
     }
 }
