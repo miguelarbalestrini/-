@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     {
         if (!s) s = this;
         else Destroy(gameObject);
-        //lockIcon = GetComponent<Image>();
         lockIcon.enabled = false;
     }
 
@@ -24,13 +23,7 @@ public class UIManager : MonoBehaviour
     {
         set { this.mainCamera = value; }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (lockedEnemy && mainCamera != null)

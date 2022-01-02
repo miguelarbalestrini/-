@@ -8,18 +8,11 @@ public class OrbsSpawn : MonoBehaviour
     [SerializeField] private GameObject orbPrefab;
     [SerializeField] private int orbValue;
     
-    void Start()
-    {
-        
-    }
-
     private void SetOrb()
     {
         GameObject orbs = Instantiate(orbPrefab);
         
         Orb orb = orbs.GetComponent<Orb>();
-
-        //transform.position = container.transform.position;
 
         orb.Target = target.transform;
         orb.transform.position = transform.position;
@@ -40,10 +33,4 @@ public class OrbsSpawn : MonoBehaviour
         int orbsToSpawn = points / orbValue;
         return orbsToSpawn;
     }
-        // Update is called once per frame
-        void Update()
-    {
-
-    }
-
 }

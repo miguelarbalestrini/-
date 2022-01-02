@@ -48,7 +48,6 @@ public class Orb : MonoBehaviour
     }
 
     #endregion
-    // Start is called before the first frame update
     void Start()
     {
         movement = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -56,7 +55,6 @@ public class Orb : MonoBehaviour
         SetColor(color);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(orbType != typesOrbs.SpPoints)
@@ -105,7 +103,6 @@ public class Orb : MonoBehaviour
 
         orb.material.color = pColor;
     }
-
     private void OnTriggerStay(Collider other)
     {
         if(orbType == typesOrbs.SpPoints)

@@ -7,11 +7,6 @@ public class CircularHPBar : MonoBehaviour
     [SerializeField] private TestActiveOrbs hpData;
     private float lerpSpeed;
 
-    void Start()
-    {
-    }
-
-
     void Update()
     {
         lerpSpeed = 5f * Time.deltaTime;
