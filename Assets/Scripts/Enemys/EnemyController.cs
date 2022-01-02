@@ -19,6 +19,8 @@ public class EnemyController : Creature
     private bool goBack = false;
     private bool canFollow = false;
 
+    int counter = 0;
+
     #endregion
 
     #region Fields
@@ -139,13 +141,14 @@ public class EnemyController : Creature
         if (!this.attackCDTimer.Running)
         {
             this.attackCDTimer.Run();
+            Debug.Log($"ATAQUE: {counter++}");
             this.weapon.MakeMeleeDamage();
             AnimationController.SetBool("isAttacking", true);
         }
         else if (this.attackCDTimer.SecondsLeft < 1f)
         {
             this.attackCDTimer.Duration = this.atkCooldown;
-            AnimationController.SetBool("isArcher", false);
+            AnimationController.SetBool("isAttacking", false);
         }
     }
 
@@ -182,6 +185,11 @@ public class EnemyController : Creature
             default:
                 break;
         }
+    }
+
+    public void FinishAtkAnimationEvent()
+    {
+        EventManager.RaiseEvent("onAnimationAtkFinished");
     }
 
     #endregion

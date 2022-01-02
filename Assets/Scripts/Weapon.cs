@@ -58,6 +58,7 @@ public class Weapon : MonoBehaviour
         {
             meleeWeapon.isTrigger = false;
         }
+        EventManager.StartListening("onAnimationAtkFinished", DeactivateWeapon);
     }
 
     protected void makeDamage(GameObject target)
@@ -76,6 +77,7 @@ public class Weapon : MonoBehaviour
         Debug.Log($"ENCONTRADO: {other.gameObject.name}");
         if (other.gameObject != null)
         {
+            Debug.Log("COLISION");
             this.makeDamage(other.gameObject);
         }
     }
@@ -100,15 +102,19 @@ public class Weapon : MonoBehaviour
     {
         AudioManager.Play(AudioClipName.AtkSwing);
         this.gameObject.GetComponent<Collider>().isTrigger = true;
-        Debug.Log("triger actgivo");
         gameObject.SetActive(true);
-        StartCoroutine(DeactivateWeapon());
+        Debug.Log("TE PEGO");
+        //StartCoroutine(DeactivateWeapon());
 
     }
-    private IEnumerator DeactivateWeapon()
+    private void DeactivateWeapon(EventParam eventParam)
     {
-        yield return new WaitForSeconds(0.7f);
-        gameObject.GetComponent<Collider>().isTrigger = false;
+       // yield return new WaitForSeconds(0.7f);
+       if( gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            Debug.Log("SE DESACTIVO");
+            meleeWeapon.isTrigger = false;
+        }
     }
     #endregion
 }
