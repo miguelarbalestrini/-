@@ -6,14 +6,15 @@ public class Kingslayer : Creature
 {
     #region Fields
 
-    [SerializeField]
-    private Weapon weapon;
-    [SerializeField]
-    private Weapon hiddenWeapon;
+    [SerializeField] private int mp;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private Weapon hiddenWeapon;
     [SerializeField] private ItemController item;
     [SerializeField] private Weapon[] ArrayWeapons;
     [SerializeField] private HealthBar healtBar;
+    [SerializeField] private int playerOrb = 0;
     private float maxHealt;
+    private int maxMP;
     //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
 
     #endregion
@@ -24,7 +25,8 @@ public class Kingslayer : Creature
     protected override void Start()
     {
         base.Start();
-        maxHealt = this.Health;
+        maxHealt = hp;
+        maxMP = mp;
         healtBar.SetMaxHealth(maxHealt);
         //EventManager.StartListening("onLeftClick", this.Atack);
     }
@@ -48,6 +50,40 @@ public class Kingslayer : Creature
             item.DestroyItem();
         }
     }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Orb"))
+        {
+            GameObject orbPrefab = other.gameObject;
+            Orb orb = orbPrefab.GetComponent<Orb>();
+
+            switch (orb.GetTypesOrbs)
+            {
+                case Orb.typesOrbs.HP:
+                    if (hp < maxHealt)
+                        hp += orb.OrbValue;
+                    else
+                        Debug.Log("HP: " + hp);
+                    break;
+                case Orb.typesOrbs.MP:
+                    if (mp < maxMP)
+                        mp += orb.OrbValue;
+                    else
+                        Debug.Log("MP: " + mp);
+                    break;
+                case Orb.typesOrbs.EnemyOrbs:
+                    playerOrb += orb.OrbValue;
+                    //Debug.Log(orb.OrbValue);
+                    Debug.Log("Orbs: " + playerOrb);
+                    break;
+                case Orb.typesOrbs.SpPoints:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     #endregion
 
@@ -106,7 +142,7 @@ public class Kingslayer : Creature
 
     private void UpdateHealtBar()
     {
-        healtBar.SetHealth(this.Health);
+        healtBar.SetHealth(hp);
     }
 
     #endregion

@@ -5,7 +5,7 @@ public class CircularHPBar : MonoBehaviour
 {
     [SerializeField] private Image healtBar;
     [SerializeField] private EnemyController hpData;
-    private float maxHp = 1;
+    private float maxHp;
     private float lerpSpeed;
 
     private void Start()

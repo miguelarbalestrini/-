@@ -7,13 +7,12 @@ public class Creature : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField] protected enum CharClass {Warrior, Mage, Archer};
-    //[SerializeField] protected float health;
+    [SerializeField] protected enum CharClass { Warrior, Mage, Archer };
+    [SerializeField] protected float hp;
     [SerializeField] protected float atkCooldown;
     [SerializeField] private Animator animationControler;
     protected Timer attackCDTimer;
     protected Timer movementCDTimer;
-    protected float hp;
     /*[SerializeField] private GameObject orbs;
     [SerializeField] private int points = 10;
     private Orb orb;*/

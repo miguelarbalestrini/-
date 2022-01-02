@@ -61,12 +61,6 @@ public class EnemyController : Creature
             AnimationController.SetBool("isWalking", true);
         }
         this.Aggro();
-
-        if (hp <= 0)
-        {
-            Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
-            gameObject.SetActive(false);
-        }
     }
 
     #endregion
@@ -197,7 +191,12 @@ public class EnemyController : Creature
                 break;
         }
     }
-
+    protected override void Die()
+    {
+        Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
+        base.Die();
+    }
+        
     public void FinishAtkAnimationEvent()
     {
         EventManager.RaiseEvent("onAnimationAtkFinished");

@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &75612142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149893938527902602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f420420cf93554d46ab889996189df4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 100
-  damage: 10
-  orbs: {fileID: 2438659708850442675}
-  points: 10
 --- !u!114 &75612143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healtBar: {fileID: 0}
-  hpData: {fileID: 75612142}
+  hpData: {fileID: 7485815620451726088}
 --- !u!1001 &404308674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,7 +84,7 @@ PrefabInstance:
     - target: {fileID: 2438659708984218487, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: containerPrefab
       value: 
-      objectReference: {fileID: 75612142}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
 --- !u!1 &2438659708850442675 stripped
@@ -188,6 +172,10 @@ PrefabInstance:
       value: 0.063
       objectReference: {fileID: 0}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+      propertyPath: orbs
+      value: 
+      objectReference: {fileID: 2438659708850442675}
+    - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: chest
       value: 
       objectReference: {fileID: 7434757501965049637}
@@ -195,6 +183,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 1913010333529660992}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: lifeText
       value: 
@@ -227,8 +219,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7812095592528021073, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
   m_PrefabInstance: {fileID: 1913010333451728676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7485815620451726088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+  m_PrefabInstance: {fileID: 1913010333451728676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14248f21a341373489a6f9d491197033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7434757501965049637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052780943097899009, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
   m_PrefabInstance: {fileID: 1913010333451728676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1913010333529660992 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 77949284, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+  m_PrefabInstance: {fileID: 1913010333451728676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad62a16957ac2447aad64a11d461108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
