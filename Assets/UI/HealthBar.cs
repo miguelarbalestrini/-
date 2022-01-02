@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-	public Slider slider;
-	public Gradient gradient;
-	public Image fill;
+	[SerializeField]public Slider slider;
+	[SerializeField] public Gradient gradient;
+	[SerializeField] public Image fill;
+	private float lerpSpeed;
 
-	public void SetMaxHealth(float health)
+    private void Update()
+    {
+		lerpSpeed = 3f * Time.deltaTime;
+    }
+    public void SetMaxHealth(float health)
 	{
 		slider.maxValue = health;
 		slider.value = health;
@@ -19,6 +24,7 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(float health)
 	{
 		slider.value = health;
+		Mathf.Lerp(slider.value, slider.value / slider.maxValue, lerpSpeed);
 		fill.color = gradient.Evaluate(slider.normalizedValue);
 	}
 
