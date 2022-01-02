@@ -9,14 +9,14 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Kingslayer player;
-    private Image lockIcon;
+    [SerializeField] private Image lockIcon;
     private EnemyController lockedEnemy;
 
     private void Awake()
     {
         if (!s) s = this;
         else Destroy(gameObject);
-        lockIcon = transform.Find("LockIcon").GetComponent<Image>();
+        //lockIcon = GetComponent<Image>();
         lockIcon.enabled = false;
     }
 
@@ -35,8 +35,8 @@ public class UIManager : MonoBehaviour
     {
         if (lockedEnemy && mainCamera != null)
         {
-            lockIcon.rectTransform.position = mainCamera.WorldToScreenPoint(lockedEnemy.Chest.position);
-           // player.transform.LookAt(lockedEnemy.transform);
+            gameObject.transform.position = lockedEnemy.Chest.position;
+            //player.transform.LookAt(lockedEnemy.transform);
         }
     }
 
