@@ -8,6 +8,8 @@ public class ChestController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private OrbsSpawn spawn;
     [SerializeField] private int orbPoints;
+    private GameObject currentChest;
+    private bool canBeOpened = false;
 
     void Awake()
     {
@@ -27,24 +29,35 @@ public class ChestController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             text.gameObject.SetActive(true);
+            currentChest = this.gameObject;
+            canBeOpened = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
+        {
             text.gameObject.SetActive(false);
+            canBeOpened = false;
+        }
     }
 
     public void OpenChest(EventParam eventparam)
     {
-        SetSpawner();
-        Destroy(gameObject);
+        if (GameObject.ReferenceEquals(currentChest, this.gameObject) && canBeOpened)
+        {
+            SetSpawner();
+            gameObject.SetActive(false);
+        }
     }
 
     private void SetSpawner()
     {
-        int numOrbs = spawn.pointsToOrbs(orbPoints);
-        spawn.SpawnOrbs(numOrbs);
+        if (gameObject.activeSelf)
+        {
+            int numOrbs = spawn.pointsToOrbs(orbPoints);
+            spawn.SpawnOrbs(numOrbs);
+        }
     }
 }
