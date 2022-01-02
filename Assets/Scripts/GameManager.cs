@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Kingslayer player;
+    public GameObject pauseDisplay;
     // Start is called before the first frame update
 
     //SCORE
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        checkCurrentEscene();
         EventManager.StartListening("onHit", SubsScore);
         EventManager.StartListening("onAtack", AddScore);
         EventManager.StartListening("onPause", PauseGame);
@@ -59,8 +62,9 @@ public class GameManager : MonoBehaviour
 
     private void PauseGame(EventParam eventParam)
     {
-        if(!isPaused)
+        if (!isPaused)
         {
+            pauseDisplay.SetActive(true);
             Time.timeScale = 0;
             isPaused = true;
         }
@@ -70,12 +74,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         if (isPaused)
         {
+            pauseDisplay.SetActive(false);
             Time.timeScale = 1;
             isPaused = false;
         }
+    }
+
+    public void checkCurrentEscene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "MainMenu")
+        {
+            AudioManager.PlayLoop(AudioClipName.BackgroundSurvival);
+        }
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadSceneAsync(levelName);
+        AudioManager.Stop();
+        AudioManager.PlayLoop(AudioClipName.BackgroundBoss2);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

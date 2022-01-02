@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 7190507172243171268}
   - component: {fileID: 7176598494837597841}
   - component: {fileID: 7176598494837597838}
+  - component: {fileID: 1439209010}
   m_Layer: 0
   m_Name: ChestMP
   m_TagString: Untagged
@@ -362,6 +363,19 @@ MonoBehaviour:
   text: {fileID: 7176598494666270554}
   spawn: {fileID: 4383359484746288473}
   orbPoints: 10
+--- !u!65 &1439209010
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177589706310818012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9124198, y: 0.69090164, z: 0.31831527}
+  m_Center: {x: 0.0008404255, y: 0.34545076, z: 0.20184731}
 --- !u!1001 &1884790813302222756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -434,6 +448,10 @@ PrefabInstance:
     - target: {fileID: 4691498433178719137, guid: 383ac8ffd94b08e478a99ca420018bf2, type: 3}
       propertyPath: target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691498433178719137, guid: 383ac8ffd94b08e478a99ca420018bf2, type: 3}
+      propertyPath: orbValue
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4691498433178719137, guid: 383ac8ffd94b08e478a99ca420018bf2, type: 3}
       propertyPath: orbPrefab

@@ -322,12 +322,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad62a16957ac2447aad64a11d461108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 20
   grounded: 1
   pickText: {fileID: 0}
   projectilePrefab: {fileID: 0}
   handposition: {fileID: 6298071564914032065}
   arrowSpeed: 1
+  isMelee: 1
 --- !u!65 &2037427002
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -359,6 +360,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1660313200174220325, guid: 93459acaa9c840640a9d69ae6c13b66a, type: 3}
   handposition: {fileID: 6298071564297803506}
   arrowSpeed: 1
+  isMelee: 1
 --- !u!1 &6298071563978181508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,11 +1961,21 @@ MonoBehaviour:
   jumpInput: 32
   strafeInput: 9
   sprintInput: 304
+  setTargetInput: 120
+  rollInput: 99
+  pauseInput: 27
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   cc: {fileID: 0}
   tpCamera: {fileID: 0}
   cameraMain: {fileID: 0}
+  rollSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotationSpeed: 0
 --- !u!54 &6298071565382763890
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2006,14 +2018,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc288fee4d04dc43b01a67658686408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  hp: 100
   atkCooldown: 2
-  atkInCooldown: 0
-  isAlive: 1
-  respawnTime: 0
   animationControler: {fileID: 6298071565382763855}
-  lifeText: {fileID: 469801605}
   dead: {fileID: 11400000, guid: acdc0dcbcc73b224887efeb54654105b, type: 2}
+  mp: 0
   weapon: {fileID: 69383645}
   hiddenWeapon: {fileID: 2037427003}
   item: {fileID: 0}
@@ -2022,6 +2031,7 @@ MonoBehaviour:
   - {fileID: 2037427003}
   - {fileID: 69383645}
   healtBar: {fileID: 0}
+  playerOrb: 0
 --- !u!114 &142492389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2060,7 +2070,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
