@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform handposition;
     [SerializeField] float arrowSpeed = 1;
     [SerializeField] bool isMelee = true;
-    Collider weapon;
+    Collider currentWeapon;
 
 
     public Vector3 TargetPosition
@@ -58,7 +58,10 @@ public class Weapon : MonoBehaviour
         {
             meleeWeapon.isTrigger = false;
         }
-        EventManager.StartListening("onAnimationAtkFinished", DeactivateWeapon);
+        EventManager.StartListening("onAnimationAtkInitEnemy", ActivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkFinishedEnemy", DeactivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkInitPlayer", ActivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkFinishedPlayer", DeactivateMeleeWeaponAtk);
     }
 
     protected void makeDamage(GameObject target)
@@ -71,15 +74,14 @@ public class Weapon : MonoBehaviour
             EventManager.RaiseEvent("onDamaged", eventParam);
         }
     }
-
+  
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"ENCONTRADO: {other.gameObject.name}");
         if (other.gameObject != null)
         {
-            Debug.Log("COLISION");
             this.makeDamage(other.gameObject);
         }
+        
     }
 
     #endregion
@@ -100,20 +102,32 @@ public class Weapon : MonoBehaviour
 
     public void MakeMeleeDamage()
     {
-        AudioManager.Play(AudioClipName.AtkSwing);
-        this.gameObject.GetComponent<Collider>().isTrigger = true;
-        gameObject.SetActive(true);
-        Debug.Log("TE PEGO");
-        //StartCoroutine(DeactivateWeapon());
-
-    }
-    private void DeactivateWeapon(EventParam eventParam)
-    {
-       // yield return new WaitForSeconds(0.7f);
-       if( gameObject.TryGetComponent(out Collider meleeWeapon))
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
         {
-            Debug.Log("SE DESACTIVO");
-            meleeWeapon.isTrigger = false;
+            currentWeapon = meleeWeapon;
+        };
+    }
+
+    private void ActivateMeleeWeaponAtk(EventParam eventParam)
+    {
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            AudioManager.Play(AudioClipName.AtkSwing);
+            if (GameObject.ReferenceEquals(currentWeapon, meleeWeapon) && currentWeapon != null)
+            {
+                meleeWeapon.isTrigger = true;
+            }
+        }
+    }
+
+    private void DeactivateMeleeWeaponAtk(EventParam eventParam)
+    {
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            if (GameObject.ReferenceEquals(currentWeapon, meleeWeapon) && currentWeapon)
+            {
+                meleeWeapon.isTrigger = false;
+            }
         }
     }
     #endregion

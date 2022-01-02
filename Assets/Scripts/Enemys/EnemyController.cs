@@ -25,7 +25,7 @@ public class EnemyController : Creature
 
     #endregion
 
-    #region Fields
+    #region Properties
 
     public Transform Chest
     {
@@ -196,12 +196,16 @@ public class EnemyController : Creature
         Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
         base.Die();
     }
-        
-    public void FinishAtkAnimationEvent()
+
+    public void InitAtkAnimationEvent()
     {
-        EventManager.RaiseEvent("onAnimationAtkFinished");
+        EventManager.RaiseEvent("onAnimationAtkInitEnemy");
     }
 
+    public void FinishAtkAnimationEvent()
+    {
+        EventManager.RaiseEvent("onAnimationAtkFinishedEnemy");
+    }
     #endregion
 }   
 

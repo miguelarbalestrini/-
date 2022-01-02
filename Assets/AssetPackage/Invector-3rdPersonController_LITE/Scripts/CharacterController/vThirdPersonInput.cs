@@ -101,7 +101,7 @@ namespace Invector.vCharacterController
             SprintInput();
             StrafeInput();
             JumpInput();
-            OpenChest();
+            OpenChestInput();
             RollInput();
             PauseInput();
         }
@@ -248,7 +248,7 @@ namespace Invector.vCharacterController
                 tpCamera.transform.position += rollMove.normalized * speed * Time.deltaTime;
             }
         }
-        protected virtual void OpenChest()
+        protected virtual void OpenChestInput()
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -264,17 +264,22 @@ namespace Invector.vCharacterController
             rollCurrentTime = 0;
         }
 
-        void PauseInput()
+        private void PauseInput()
         {
             if (Input.GetKeyDown(pauseInput))
             {
                 EventManager.RaiseEvent("onPause");
             }
         }
+     
+        public void InitAtkAnimationEvent()
+        {
+            EventManager.RaiseEvent("onAnimationAtkInitPlayer");
+        }
 
         public void FinishAtkAnimationEvent()
         {
-            EventManager.RaiseEvent("onAnimationAtkFinished");
+            EventManager.RaiseEvent("onAnimationAtkFinishedPlayer");
         }
         #endregion       
     }
