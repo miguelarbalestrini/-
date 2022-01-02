@@ -261,6 +261,11 @@ namespace Invector.vCharacterController
                 EventManager.RaiseEvent("onPause");
             }
         }
+
+        public void FinishAtkAnimationEvent()
+        {
+            EventManager.RaiseEvent("onAnimationAtkFinished");
+        }
         #endregion       
     }
 }
