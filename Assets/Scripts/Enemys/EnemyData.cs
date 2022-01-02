@@ -10,7 +10,8 @@ public class EnemyData : ScriptableObject
     #region Field
 
     [SerializeField] private string enemyName;
-    //[SerializeField] private float hp;
+    [SerializeField] private float maxHp;
+    [SerializeField] private int points;
     [SerializeField] private float speed;
     [SerializeField] private float attackRange;
     [SerializeField] private float followRange;
@@ -24,10 +25,14 @@ public class EnemyData : ScriptableObject
     {
         get { return enemyName; }
     }
-    /*public float HP
+    public float MaxHP
     {
-        get { return hp; }
-    }*/
+        get { return maxHp; }
+    }
+    public int Points
+    {
+        get { return points; }
+    }
     public float Speed
     {
         get { return speed; }

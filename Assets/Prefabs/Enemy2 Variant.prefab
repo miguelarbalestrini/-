@@ -90,6 +90,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218487, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
+      propertyPath: orbValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438659708984218487, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: orbPrefab
       value: 
       objectReference: {fileID: 377284591289287597, guid: 6cf36fa308e330042bc8838d37e92021, type: 3}
@@ -184,6 +188,10 @@ PrefabInstance:
       value: 0.063
       objectReference: {fileID: 0}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+      propertyPath: chest
+      value: 
+      objectReference: {fileID: 7434757501965049637}
+    - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 0}
@@ -194,6 +202,10 @@ PrefabInstance:
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+      propertyPath: atkCooldown
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: myEnemyData
@@ -213,5 +225,10 @@ GameObject:
 --- !u!4 &8567609344899527029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7812095592528021073, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+  m_PrefabInstance: {fileID: 1913010333451728676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7434757501965049637 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9052780943097899009, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
   m_PrefabInstance: {fileID: 1913010333451728676}
   m_PrefabAsset: {fileID: 0}

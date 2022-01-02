@@ -14,6 +14,8 @@ public class EnemyController : Creature
     [SerializeField] private CharClass enemyClass;
     [SerializeField] private Weapon weapon;
     [SerializeField] protected EnemyData myEnemyData;
+    [SerializeField] private GameObject orbs;
+    private OrbsSpawn Orbs;
     private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
@@ -37,12 +39,15 @@ public class EnemyController : Creature
     {
         base.Awake();
         movementCDTimer = gameObject.AddComponent<Timer>();
+        hp = myEnemyData.MaxHP;
     }
 
     protected override void Start()
     {
         base.Start();
+        Orbs = orbs.GetComponent<OrbsSpawn>();
         movementCDTimer.Duration = myEnemyData.MovementCD;
+
     }
 
     // Update is called once per frame
@@ -54,6 +59,12 @@ public class EnemyController : Creature
             AnimationController.SetBool("isWalking", true);
         }
         this.Aggro();
+
+        if (hp <= 0)
+        {
+            Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
+            gameObject.SetActive(false);
+        }
     }
 
     #endregion
@@ -185,5 +196,5 @@ public class EnemyController : Creature
     }
 
     #endregion
-}
+}   
 

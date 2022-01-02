@@ -8,12 +8,12 @@ public class Creature : MonoBehaviour
     #region Fields
 
     [SerializeField] protected enum CharClass {Warrior, Mage, Archer};
-    [SerializeField] protected float health;
+    //[SerializeField] protected float health;
     [SerializeField] protected float atkCooldown;
     [SerializeField] private Animator animationControler;
-    [SerializeField] protected TextMesh lifeText = null;
     protected Timer attackCDTimer;
     protected Timer movementCDTimer;
+    protected float hp;
     /*[SerializeField] private GameObject orbs;
     [SerializeField] private int points = 10;
     private Orb orb;*/
@@ -27,7 +27,7 @@ public class Creature : MonoBehaviour
 
     public float Health
     {
-        get { return health; }
+        get { return hp; }
     }
 
     public Animator AnimationController
@@ -65,12 +65,6 @@ public class Creature : MonoBehaviour
         }
     }
 
-    /*private int pointToOrbs()
-{
-    int totalOrbs = points / orb.OrbPoints;
-    return totalOrbs;
-}*/
-
     #endregion
 
     #region ProtectedMethods
@@ -92,8 +86,8 @@ public class Creature : MonoBehaviour
         {
             AudioManager.Play(AudioClipName.AtkImpact1);
             float damage = eventParam.floatParam;
-            this.health -= damage;
-            if (this.health <= 0)
+            hp -= damage;
+            if (this.hp<= 0)
             {
                 this.Die();
             }

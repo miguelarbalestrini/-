@@ -4,8 +4,14 @@ using UnityEngine.UI;
 public class CircularHPBar : MonoBehaviour
 {
     [SerializeField] private Image healtBar;
-    [SerializeField] private TestActiveOrbs hpData;
+    [SerializeField] private EnemyController hpData;
+    private float maxHp = 1;
     private float lerpSpeed;
+
+    private void Start()
+    {
+        maxHp = hpData.Health;
+    }
 
     void Update()
     {
@@ -16,11 +22,11 @@ public class CircularHPBar : MonoBehaviour
 
     void HealtBarFiller()
     {
-        healtBar.fillAmount = Mathf.Lerp(healtBar.fillAmount, hpData.Hp / hpData.MaxHp, lerpSpeed);
+        healtBar.fillAmount = Mathf.Lerp(healtBar.fillAmount, hpData.Health / maxHp, lerpSpeed);
     }
     void ColorChanger()
     {
-        Color healtColor = Color.Lerp(Color.red, Color.green, (hpData.Hp / hpData.MaxHp));
+        Color healtColor = Color.Lerp(Color.red, Color.green, (hpData.Health / maxHp));
         healtBar.color = healtColor;
     }
 }
