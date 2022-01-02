@@ -8,7 +8,7 @@ public class TestActiveOrbs : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private GameObject orbs;
     [SerializeField] private int points = 10;
-    [SerializeField] private int orbValue = 2;
+    //[SerializeField] private int orbValue = 2;
     private OrbsSpawn Orbs;
     private float hp;
 
@@ -17,10 +17,10 @@ public class TestActiveOrbs : MonoBehaviour
         get { return points; }
     }
 
-    public int OrbValue
+    /*public int OrbValue
     {
         get { return orbValue; }
-    }
+    }*/
 
     public float MaxHp
     {
@@ -42,17 +42,17 @@ public class TestActiveOrbs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(hp);
         if(hp > 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log(hp);
                 hp -= damage;
             }
         }
         if(hp <= 0)
         {
-            Orbs.SpawnOrbs();
+            Orbs.SpawnOrbs(Orbs.pointsToOrbs(points));
             gameObject.SetActive(false);
         }
     }

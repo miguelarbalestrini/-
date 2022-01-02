@@ -39,7 +39,7 @@ public class Kingslayer : Creature
         this.ChangeWeapon();
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(KeyCode.E) && item.ItemIsGrounded())
         {
@@ -47,7 +47,7 @@ public class Kingslayer : Creature
             hiddenWeapon.gameObject.SetActive(true);
             item.DestroyItem();
         }
-    }
+    }*/
 
     #endregion
 

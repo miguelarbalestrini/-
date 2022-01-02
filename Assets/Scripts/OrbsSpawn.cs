@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class OrbsSpawn : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private GameObject target;
     [SerializeField] private GameObject orbPrefab;
-    [SerializeField] private TestActiveOrbs containerPrefab;
+    [SerializeField] private int orbValue;
     
     void Start()
     {
@@ -21,24 +21,23 @@ public class OrbsSpawn : MonoBehaviour
 
         //transform.position = container.transform.position;
 
-        orb.Target = target;
+        orb.Target = target.transform;
         orb.transform.position = transform.position;
         orb.SetColor(orb.Color);
-        orb.OrbValue = containerPrefab.OrbValue;
+        orb.OrbValue = orbValue;
     }
 
-    public void SpawnOrbs()
+    public void SpawnOrbs( int numOrbs)
     {
-        int numOrbs = pointsToOrbs(containerPrefab.OrbValue);
         for (int i = 0; i < numOrbs; i++)
         {
             SetOrb();
         }
     }
 
-    private int pointsToOrbs(int value)
+    public int pointsToOrbs(int points)
     {
-        int orbsToSpawn = containerPrefab.Points / value;
+        int orbsToSpawn = points / orbValue;
         return orbsToSpawn;
     }
         // Update is called once per frame
@@ -46,4 +45,5 @@ public class OrbsSpawn : MonoBehaviour
     {
 
     }
+
 }

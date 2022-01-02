@@ -1,17 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1234974603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50157332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9be3480952f67f46b077780cad484c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &75612142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,7 +16,6 @@ MonoBehaviour:
   damage: 10
   orbs: {fileID: 2438659708850442675}
   points: 10
-  orbValue: 2
 --- !u!114 &75612143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,16 +30,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healtBar: {fileID: 322083106}
   hpData: {fileID: 75612142}
+--- !u!114 &1234974603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50157332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9be3480952f67f46b077780cad484c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &404308674
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7149893938527902603}
+    m_TransformParent: {fileID: 8567609344899527029}
     m_Modifications:
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -72,15 +71,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2438659708984218480, guid: 59bc57b07d0689945ab373912da5547b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -206,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9038325769345090604, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
       propertyPath: myEnemyData
@@ -223,9 +222,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8770169168736955566, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
   m_PrefabInstance: {fileID: 1913010333451728676}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7149893938527902603 stripped
+--- !u!4 &8567609344899527029 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8770169168736955567, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7812095592528021073, guid: 3e44d283a98e1a74cb6ad875d0bf61b9, type: 3}
   m_PrefabInstance: {fileID: 1913010333451728676}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5307329863537523070
@@ -233,7 +232,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7149893938527902603}
+    m_TransformParent: {fileID: 8567609344899527029}
     m_Modifications:
     - target: {fileID: 5307329863282810947, guid: 6eea88d50a866ff46b724ec35cca253b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -257,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5307329863555001963, guid: 6eea88d50a866ff46b724ec35cca253b, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5307329863555001963, guid: 6eea88d50a866ff46b724ec35cca253b, type: 3}
       propertyPath: m_AnchorMax.x

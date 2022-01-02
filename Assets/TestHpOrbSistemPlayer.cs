@@ -47,6 +47,7 @@ public class TestHpOrbSistemPlayer : MonoBehaviour
                     break;
                 case Orb.typesOrbs.EnemyOrbs:
                     playerOrb += orb.OrbValue;
+                    Debug.Log(orb.OrbValue);
                     Debug.Log("Orbs: " + playerOrb);
                     break;
                 case Orb.typesOrbs.SpPoints:

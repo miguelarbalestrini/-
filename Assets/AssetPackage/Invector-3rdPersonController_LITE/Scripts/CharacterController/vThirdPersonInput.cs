@@ -101,6 +101,7 @@ namespace Invector.vCharacterController
             SprintInput();
             StrafeInput();
             JumpInput();
+            OpenChest();
             RollInput();
             PauseInput();
         }
@@ -225,7 +226,7 @@ namespace Invector.vCharacterController
             return result;
         }
 
-       private  void RollInput()
+        private  void RollInput()
         {
             if (!rolling)
             {
@@ -247,6 +248,15 @@ namespace Invector.vCharacterController
                 tpCamera.transform.position += rollMove.normalized * speed * Time.deltaTime;
             }
         }
+        protected virtual void OpenChest()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("anda");
+                EventManager.RaiseEvent("OnOpenChest");
+            }
+        }
+
 
         private void EnableActions()
         {
