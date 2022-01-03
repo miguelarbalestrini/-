@@ -14,9 +14,10 @@ public class Weapon : MonoBehaviour
     [SerializeField] 
     private GameObject projectilePrefab;
     protected Vector3 targetPosition;
-    [SerializeField] Transform handposition;
-    [SerializeField] float arrowSpeed = 1;
-    [SerializeField] bool isMelee = true;
+    [SerializeField] private Transform handposition;
+    [SerializeField] private float arrowSpeed = 1;
+    [SerializeField] private bool isMelee = true;
+    [SerializeField] private float timeToDestroy = 0.5f;
     Collider currentWeapon;
 
 
@@ -97,7 +98,14 @@ public class Weapon : MonoBehaviour
             GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
             this.makeDamage(hit.transform.gameObject);
+            StartCoroutine(DestroProjectile(projectile));
         }
+    }
+
+    IEnumerator DestroProjectile(GameObject projectile)
+    {
+        yield return new WaitForSeconds(timeToDestroy);
+        Destroy(projectile);
     }
 
     public void MakeMeleeDamage()

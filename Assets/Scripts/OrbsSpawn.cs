@@ -31,7 +31,12 @@ public class OrbsSpawn : MonoBehaviour
 
     public int pointsToOrbs(int points)
     {
-        int orbsToSpawn = points / orbValue;
-        return orbsToSpawn;
+        if (points != 0 && orbValue != 0)
+        {
+            int orbsToSpawn = points / orbValue;
+            return orbsToSpawn;
+        }
+        return 0;
+        
     }
 }

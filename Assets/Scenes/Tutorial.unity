@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.4
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23725146, g: 0.2424536, b: 0.22742683, a: 0.4}
+  m_IndirectSpecularColor: {r: 0.23725131, g: 0.24245349, b: 0.22742656, a: 0.4}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17880,6 +17880,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968200195239877761, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287910160294896015, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1556765084}
+    - target: {fileID: 8287910160294896015, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: orbValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287910161223169649, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1556765084}
+    - target: {fileID: 8287910161223169649, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: orbValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287910161295985908, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1556765084}
+    - target: {fileID: 8287910161295985908, guid: 319eeaab975dee14e958ea9eaaa8832b, type: 3}
+      propertyPath: orbValue
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
