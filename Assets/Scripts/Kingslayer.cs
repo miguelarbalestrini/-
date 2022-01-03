@@ -17,6 +17,10 @@ public class Kingslayer : Creature
     private int maxMP;
     //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
 
+    public int Orbs
+    {
+        get { return playerOrb; }
+    }
     #endregion
 
     #region UnityMethods
