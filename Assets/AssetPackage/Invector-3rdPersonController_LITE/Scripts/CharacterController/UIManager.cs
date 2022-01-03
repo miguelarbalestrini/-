@@ -30,7 +30,8 @@ public class UIManager : MonoBehaviour
         if (lockedEnemy && mainCamera != null)
         {
             gameObject.transform.position = lockedEnemy.Chest.position;
-            //player.transform.LookAt(lockedEnemy.transform);
+            //hpBar.ColorChanger();
+            //hpBar.HealtBarFiller();
         }
         checkStatus();
     }

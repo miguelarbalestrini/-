@@ -26,4 +26,11 @@ public class LevelManager : MonoBehaviour
         AudioManager.Stop();
         AudioManager.PlayLoop(AudioClipName.BackgroundBoss2);
     }
+
+    public void LoadTutorial()
+    {
+        SceneManager.LoadSceneAsync("Tutorial");
+        AudioManager.Stop();
+        AudioManager.PlayLoop(AudioClipName.BackgroundBoss2);
+    }
 }
