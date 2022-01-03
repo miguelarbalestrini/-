@@ -21,8 +21,6 @@ public class EnemyController : Creature
     private bool goBack = false;
     private bool canFollow = false;
 
-    int counter = 0;
-
     #endregion
 
     #region Properties
@@ -147,7 +145,6 @@ public class EnemyController : Creature
         if (!this.attackCDTimer.Running)
         {
             this.attackCDTimer.Run();
-            Debug.Log($"ATAQUE: {counter++}");
             this.weapon.MakeMeleeDamage();
             AnimationController.SetBool("isAttacking", true);
         }
@@ -192,6 +189,7 @@ public class EnemyController : Creature
                 break;
         }
     }
+
     protected override void Die()
     {
         EventManager.RaiseEvent("onAtack");

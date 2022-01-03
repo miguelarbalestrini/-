@@ -80,6 +80,7 @@ public class Creature : MonoBehaviour
             AudioManager.Play(AudioClipName.AtkImpact1);
             float damage = eventParam.floatParam;
             hp -= damage;
+            //Debug.Log($"HP {eventParam.gameObjParam.name}: {hp}");
             if (this.hp<= 0)
             {
                 this.Die();
