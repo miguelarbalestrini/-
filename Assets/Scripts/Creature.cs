@@ -47,9 +47,6 @@ public class Creature : MonoBehaviour
     {
         this.attackCDTimer.Duration = this.atkCooldown;
         EventManager.StartListening("onDamaged", this.GetDamaged);
-        /*OrbsSpawn Orbs = orbs.GetComponent<OrbsSpawn>();
-        orb = Orbs.GetComponent<Orb>();
-        Orbs.NumOrbsToSpawn = pointToOrbs();*/
     }
 
     #endregion
@@ -68,10 +65,7 @@ public class Creature : MonoBehaviour
 
     #region ProtectedMethods
 
-    protected virtual void Atack() 
-    {
-        EventManager.RaiseEvent("onAtack");
-    }
+    protected virtual void Atack() {}
 
     protected virtual void Die()
     {

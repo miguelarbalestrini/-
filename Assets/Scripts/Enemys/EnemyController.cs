@@ -65,6 +65,7 @@ public class EnemyController : Creature
 
     #endregion
 
+
     #region PrivateMethods
 
     private void MoveEnemy()
@@ -193,6 +194,7 @@ public class EnemyController : Creature
     }
     protected override void Die()
     {
+        EventManager.RaiseEvent("onAtack");
         Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
         base.Die();
     }
