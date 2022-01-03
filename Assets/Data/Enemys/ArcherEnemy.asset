@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Archer
   maxHp: 100
-  points: 10
+  points: 5
   speed: 1
   attackRange: 10
   followRange: 6

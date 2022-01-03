@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   orbPrefab: {fileID: 4828162564982965259, guid: a0092bc9ba160cc4e9a35f1f7ee20b67, type: 3}
+  orbValue: 1
