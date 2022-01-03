@@ -9,4 +9,5 @@ public struct EventParam
     public float floatParam;
     public bool boolParam;
     public GameObject gameObjParam;
+    public EnemyController enemyControllerParam;
 }

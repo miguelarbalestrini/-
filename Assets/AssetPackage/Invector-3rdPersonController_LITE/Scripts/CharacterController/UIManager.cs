@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
         if (!s) s = this;
         else Destroy(gameObject);
         lockIcon.enabled = false;
+       
     }
 
     public Camera  MainCamera
@@ -31,17 +32,33 @@ public class UIManager : MonoBehaviour
             gameObject.transform.position = lockedEnemy.Chest.position;
             //player.transform.LookAt(lockedEnemy.transform);
         }
+        checkStatus();
     }
 
     public void LockEnemy(EnemyController enemy)
     {
-        lockedEnemy = enemy;
-        lockIcon.enabled = true;
+        if (enemy)
+        {
+            lockedEnemy = enemy;
+            lockIcon.enabled = true;
+            EventParam eventParam = new EventParam();
+            eventParam.enemyControllerParam = lockedEnemy;
+            EventManager.RaiseEvent("onLock", eventParam);
+        }
+     
     }
 
     public void UnlockEnemy()
     {
         lockedEnemy = null;
         lockIcon.enabled = false;
+    }
+
+    private void checkStatus()
+    {
+        if (lockedEnemy && lockedEnemy.Health <= 0)
+        {
+            lockIcon.enabled = false;
+        }
     }
 }

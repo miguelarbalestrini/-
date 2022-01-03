@@ -190,7 +190,6 @@ namespace Invector.vCharacterController
                     {
                         lockingEnemy = true;
                         UIManager.s.LockEnemy(lockedEnemy);
-                        Debug.Log("Locking enemy");
                     }
                 }
                 else
@@ -236,7 +235,6 @@ namespace Invector.vCharacterController
                 cc.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(cc.transform.forward, move, rotationSpeed, 0.0f));
                 //cc.GetFullBodyAnimator().Play("Roll");
                 Invoke("EnableActions", rollTimeSeconds + 0.15f);
-                Debug.Log("ROLLING");
             }
             else
             {
