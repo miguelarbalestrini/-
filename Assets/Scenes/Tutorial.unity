@@ -4213,6 +4213,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 121.4
       objectReference: {fileID: 0}
+    - target: {fileID: 965585726, guid: 4233a6883c796fb4da85b4a136041f22, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1556765084}
     - target: {fileID: 1192198688, guid: 4233a6883c796fb4da85b4a136041f22, type: 3}
       propertyPath: m_IsActive
       value: 0

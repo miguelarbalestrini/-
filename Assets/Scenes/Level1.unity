@@ -6761,9 +6761,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 965585726, guid: 4233a6883c796fb4da85b4a136041f22, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 142492381}
     - target: {fileID: 1848526375, guid: 4233a6883c796fb4da85b4a136041f22, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -337.50003
+      value: -337.5
       objectReference: {fileID: 0}
     - target: {fileID: 3951871512152848136, guid: 4233a6883c796fb4da85b4a136041f22, type: 3}
       propertyPath: m_AnchorMax.x
