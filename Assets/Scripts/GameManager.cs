@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
             score = 0;
             scoreInstanciado = 0;
         }
@@ -58,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isPaused)
         {
+            Cursor.visible = true;
             pauseDisplay.SetActive(true);
             Time.timeScale = 0;
             isPaused = true;
@@ -72,9 +72,24 @@ public class GameManager : MonoBehaviour
     {
         if (isPaused)
         {
+            Cursor.visible = false;
             pauseDisplay.SetActive(false);
             Time.timeScale = 1;
             isPaused = false;
+        }
+    }
+    public void ActivePauseGame()
+    {
+        if (!isPaused)
+        {
+            Cursor.visible = true;
+            pauseDisplay.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+        else
+        {
+            ResumeGame();
         }
     }
 
@@ -96,6 +111,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+
         Application.Quit();
     }
 }

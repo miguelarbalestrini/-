@@ -57,6 +57,7 @@ public class Creature : MonoBehaviour
     {
         if (dead != null)
         {
+            Cursor.visible = true;
             dead.Raise();
         }
     }

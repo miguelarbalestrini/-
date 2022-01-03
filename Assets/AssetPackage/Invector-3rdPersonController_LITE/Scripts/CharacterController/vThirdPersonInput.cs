@@ -48,6 +48,7 @@ namespace Invector.vCharacterController
         {
             InitilizeController();
             InitializeTpCamera();
+            Cursor.visible = false;
         }
 
         protected virtual void FixedUpdate()
