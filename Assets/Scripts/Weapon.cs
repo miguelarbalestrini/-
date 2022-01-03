@@ -14,8 +14,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] 
     private GameObject projectilePrefab;
     protected Vector3 targetPosition;
-    [SerializeField] Transform handposition;
-    [SerializeField] float arrowSpeed = 1;
+    [SerializeField] private Transform handposition;
+    [SerializeField] private float arrowSpeed = 1;
+    [SerializeField] private bool isMelee = true;
+    [SerializeField] private float timeToDestroy = 0.5f;
+    Collider currentWeapon;
+
 
     public Vector3 TargetPosition
     {
@@ -37,6 +41,11 @@ public class Weapon : MonoBehaviour
         get { return grounded; }
     }
 
+    public bool IsMelee
+    {
+        get { return isMelee; }
+    }
+
     public TextMesh PickText
     {
         get { return pickText; }
@@ -44,31 +53,36 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region UnityMethods
-
-    protected void makeDamage(Creature target)
+    private void Start()
     {
-        if (target != null)
+        if (isMelee && this.gameObject.TryGetComponent(out Collider meleeWeapon))
         {
-            target.GetDamaged(this.Damage);
+            meleeWeapon.isTrigger = false;
         }
+        EventManager.StartListening("onAnimationAtkInitEnemy", ActivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkFinishedEnemy", DeactivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkInitPlayer", ActivateMeleeWeaponAtk);
+        EventManager.StartListening("onAnimationAtkFinishedPlayer", DeactivateMeleeWeaponAtk);
     }
 
+    protected void makeDamage(GameObject target)
+    {
+        EventParam eventParam = new EventParam();
+        if (target != null)
+        {
+            eventParam.gameObjParam = target;
+            eventParam.floatParam = this.damage;
+            EventManager.RaiseEvent("onDamaged", eventParam);
+        }
+    }
+  
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyController enemy))
+        if (other.gameObject != null)
         {
-            //Debug.Log($"DAMAGE:  {this.Damage}");
-            makeDamage(enemy);
-            Debug.Log($"Score {GameManager.GetScore()}");
+            this.makeDamage(other.gameObject);
         }
-        else if (other.gameObject.TryGetComponent(out Kingslayer player))
-        {
-            makeDamage(player);
-            if (!IsGrounded)
-            {
-                Debug.Log($"Score {GameManager.GetScore()}");
-            }
-        }
+        
     }
 
     #endregion
@@ -83,16 +97,46 @@ public class Weapon : MonoBehaviour
             Debug.DrawRay(handposition.transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
             GameObject projectile = Instantiate(projectilePrefab, handposition.transform.position, transform.rotation);
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * arrowSpeed, ForceMode.Impulse);
-            if (hit.transform.gameObject.TryGetComponent(out Kingslayer player))
+            this.makeDamage(hit.transform.gameObject);
+            StartCoroutine(DestroProjectile(projectile));
+        }
+    }
+
+    IEnumerator DestroProjectile(GameObject projectile)
+    {
+        yield return new WaitForSeconds(timeToDestroy);
+        Destroy(projectile);
+    }
+
+    public void MakeMeleeDamage()
+    {
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            currentWeapon = meleeWeapon;
+        };
+    }
+
+    private void ActivateMeleeWeaponAtk(EventParam eventParam)
+    {
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            AudioManager.Play(AudioClipName.AtkSwing);
+            if (GameObject.ReferenceEquals(currentWeapon, meleeWeapon) && currentWeapon != null)
             {
-                this.makeDamage(player);
-            }
-            if (hit.transform.gameObject.TryGetComponent(out EnemyController enemy))
-            {
-                this.makeDamage(enemy);
+                meleeWeapon.isTrigger = true;
             }
         }
     }
 
+    private void DeactivateMeleeWeaponAtk(EventParam eventParam)
+    {
+        if (gameObject.TryGetComponent(out Collider meleeWeapon))
+        {
+            if (GameObject.ReferenceEquals(currentWeapon, meleeWeapon) && currentWeapon)
+            {
+                meleeWeapon.isTrigger = false;
+            }
+        }
+    }
     #endregion
 }

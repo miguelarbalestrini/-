@@ -7,22 +7,15 @@ public class Creature : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]
-    protected float health;
-    [SerializeField]
-    protected enum CharClass {Warrior, Mage, Archer};
-    [SerializeField]
-    protected float atkCooldown;
-    [SerializeField]
-    protected bool atkInCooldown = false;
-    [SerializeField]
-    private bool isAlive = true;
-    [SerializeField]
-    private float respawnTime;
-    [SerializeField]
-    private Animator animationControler;
-    [SerializeField]
-    protected TextMesh lifeText = null;
+    [SerializeField] protected enum CharClass { Warrior, Mage, Archer };
+    [SerializeField] protected float hp;
+    [SerializeField] protected float atkCooldown;
+    [SerializeField] private Animator animationControler;
+    protected Timer attackCDTimer;
+    protected Timer movementCDTimer;
+    /*[SerializeField] private GameObject orbs;
+    [SerializeField] private int points = 10;
+    private Orb orb;*/
     private float remainingCD;
     public GameEvent dead;
 
@@ -33,134 +26,68 @@ public class Creature : MonoBehaviour
 
     public float Health
     {
-        get { return health; }
-    }
-
-    public float AtkCooldown
-    {
-        get { return atkCooldown; }
-        set { atkCooldown = value; }
-    }
-
-    public bool AtkInCooldown
-    {
-        get { return atkInCooldown; }
-        set { atkInCooldown = value; }
-    }
-
-
-    public float RespawnTime
-    {
-        set { respawnTime = value; }
-    }
-
-    public float RemainingCD
-    {
-        get { return remainingCD; }
-        set { remainingCD = value; }
+        get { return hp; }
     }
 
     public Animator AnimationController
     {
         get { return animationControler; }
     }
-    
+
     #endregion
 
     #region UnityMethods
 
-    // Start is called before the first frame update
-    void Start()
+    protected virtual void Awake()
     {
-        this.remainingCD = this.atkCooldown;
+        this.attackCDTimer = gameObject.AddComponent<Timer>();
     }
-
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    protected virtual void Start()
     {
+        this.attackCDTimer.Duration = this.atkCooldown;
+        EventManager.StartListening("onDamaged", this.GetDamaged);
     }
 
     #endregion
 
     #region PrivateMethods
 
-    private void Respawn()
+    private void OnDead()
     {
-        this.isAlive = true;
-    }
-
-    protected void AtackCooldown()
-    {
-        if(this.atkInCooldown && this.remainingCD >= 0)
+        if (dead != null)
         {
-            this.remainingCD -= Time.deltaTime;
-            //Debug.Log($"creature log cd remaining {remainingCD}");
-        }
-        if(this.remainingCD <= 0)
-        {
-            this.atkInCooldown = false;
+            Cursor.visible = true;
+            dead.Raise();
         }
     }
 
     #endregion
-
-    void onDead()
-    {
-        if (dead != null) {
-            Debug.Log(dead);
-            dead.Raise();
-            Debug.Log("soy un unity event");
-        }
-
-        Debug.Log(dead);
-        Debug.Log("soy un unity event null");
-    }
 
     #region ProtectedMethods
 
-    protected virtual void Atack() 
+    protected virtual void Atack() {}
+
+    protected virtual void Die()
     {
-        //this.onAtack();
-      EventManager.RaiseEvent("onAtack");
+        this.OnDead();
+        gameObject.SetActive(false);
     }
 
-    protected void Die()
+    protected virtual void GetDamaged(EventParam eventParam)
     {
-        onDead();
-        this.isAlive = false;
-        //Debug.Log($"Dead: {this.health}");
-        //Destroy(gameObject);
-        Respawn();
-    }
-
-    #endregion
-
-    #region PublicMethods
-
-    public void GetDamaged(float damage)
-    {
-        
-        this.health -= damage;
-        if (gameObject.TryGetComponent(out Kingslayer player))
+        if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
         {
-            //player.onHit();
-          EventManager.RaiseEvent("onHit");
-        }
-           
-        if (this.health <= 0)
-        {
-            //Debug.Log($"Health: {this.health}");
-            this.Die();
-            this.Respawn();
+            AudioManager.Play(AudioClipName.AtkImpact1);
+            float damage = eventParam.floatParam;
+            hp -= damage;
+            //Debug.Log($"HP {eventParam.gameObjParam.name}: {hp}");
+            if (this.hp<= 0)
+            {
+                this.Die();
+            }
         }
     }
 
-    public void RenderHP()
-    {
-        if (this.lifeText != null)
-        {
-            this.lifeText.text = $"HP: {this.health.ToString()}";
-        }
-    }
     #endregion
 }

@@ -6,45 +6,77 @@ public class Kingslayer : Creature
 {
     #region Fields
 
-    [SerializeField]
-    private Weapon weapon;
-    [SerializeField]
-    private Weapon hiddenWeapon;
+    [SerializeField] private int mp;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private Weapon hiddenWeapon;
     [SerializeField] private ItemController item;
     [SerializeField] private Weapon[] ArrayWeapons;
     [SerializeField] private HealthBar healtBar;
+    [SerializeField] private int playerOrb = 0;
     private float maxHealt;
+    private int maxMP;
     //[SerializeField] private List <GameObject> listOfWeapons = new List<GameObject>();
 
+    public int Orbs
+    {
+        get { return playerOrb; }
+    }
     #endregion
 
     #region UnityMethods
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        this.RemainingCD = this.atkCooldown;
-        maxHealt = this.Health;
+        base.Start();
+        maxHealt = hp;
+        maxMP = mp;
         healtBar.SetMaxHealth(maxHealt);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Atack();
-        this.AtackCooldown();
-        //this.RenderHP();
+        this.Atack();
         UpdateHealtBar();
         this.ChangeWeapon();
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(KeyCode.E) && item.ItemIsGrounded())
         {
             this.transform.GetChild(3).gameObject.SetActive(true);
             hiddenWeapon.gameObject.SetActive(true);
             item.DestroyItem();
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Orb"))
+        {
+            GameObject orbPrefab = other.gameObject;
+            Orb orb = orbPrefab.GetComponent<Orb>();
+
+            switch (orb.GetTypesOrbs)
+            {
+                case Orb.typesOrbs.HP:
+                    if (hp < maxHealt)
+                        hp += orb.OrbValue;
+                    break;
+                case Orb.typesOrbs.MP:
+                    if (mp < maxMP)
+                        mp += orb.OrbValue;
+                    break;
+                case Orb.typesOrbs.EnemyOrbs:
+                    playerOrb += orb.OrbValue;
+                    break;
+                case Orb.typesOrbs.SpPoints:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -54,40 +86,76 @@ public class Kingslayer : Creature
 
     protected override void Atack()
     {
-        if (Input.GetMouseButtonDown(0) && !this.AtkInCooldown)
+        if (Input.GetMouseButtonDown(0) && !this.attackCDTimer.Running)
         {
             base.Atack();
-            //Debug.Log($"atack");
-            this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = true;
-            //this.weapon.MakeLongDamage(6f);
-            this.AtkInCooldown = true;
-            AnimationController.SetBool("isAttacking", true);
-            this.RemainingCD = this.atkCooldown;
-        } else if (RemainingCD < 1f){
-            //this.weapon.MakeLongDamage(6f);
+            this.attackCDTimer.Run();
+            if (this.weapon.IsMelee)
+            {
+                this.hiddenWeapon.MakeMeleeDamage();
+                AnimationController.SetBool("isAttacking", true);
+            }
+            else
+            {
+                this.weapon.MakeLongDamage(6f);
+            }
+        } 
+        else if (this.attackCDTimer.SecondsLeft < 1f)
+        {
+            this.attackCDTimer.Duration = this.atkCooldown;
             AnimationController.SetBool("isAttacking", false);
-           this.hiddenWeapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        AudioManager.Stop();
+        AudioManager.Play(AudioClipName.GameLost);
     }
 
     private void ChangeWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            this.transform.GetChild(3).gameObject.SetActive(true);
-            ArrayWeapons[1].gameObject.SetActive(true);
-            ArrayWeapons[2].gameObject.SetActive(false);
+            MeleeMode();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        /*if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             this.transform.GetChild(3).gameObject.SetActive(false);
             ArrayWeapons[1].gameObject.SetActive(false);
             ArrayWeapons[2].gameObject.SetActive(true);
-        }
+            weapon = ArrayWeapons[2];
+        }*/
     }
+
+    private void MeleeMode()
+    {
+        this.transform.GetChild(3).gameObject.SetActive(true);
+        ArrayWeapons[1].gameObject.SetActive(true);
+        ArrayWeapons[2].gameObject.SetActive(false);
+        AudioManager.Play(AudioClipName.MeleeWeaponDraw);
+        weapon = ArrayWeapons[1];
+    }
+
+    private void OnEnable()
+    {
+        MeleeMode();
+    }
+
     private void UpdateHealtBar()
     {
-        healtBar.SetHealth(this.Health);
+        healtBar.SetHealth(hp);
     }
+
     #endregion
+
+    protected override void GetDamaged(EventParam eventParam)
+    {
+        base.GetDamaged(eventParam);
+        if (GameObject.ReferenceEquals(eventParam.gameObjParam, this.gameObject))
+        {
+            EventManager.RaiseEvent("onHit");
+        }
+    }
 }

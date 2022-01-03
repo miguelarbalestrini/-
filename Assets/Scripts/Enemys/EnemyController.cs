@@ -7,18 +7,15 @@ public class EnemyController : Creature
     #region Fields
 
     [SerializeField] private Transform[] waypoints;
-    //[SerializeField] private float speed;
+    [SerializeField] private Transform chest;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float minDistance;
     [SerializeField] private GameObject player;
-    //[SerializeField] private float atackRange = 6f;
-    //[SerializeField] private float followRange = 10f;
     [SerializeField] private CharClass enemyClass;
     [SerializeField] private Weapon weapon;
-    //[SerializeField] private float movementCD;
     [SerializeField] protected EnemyData myEnemyData;
-    private bool movementInCD = false;
-    private float remainingMovementCD;
+    [SerializeField] private GameObject orbs;
+    private OrbsSpawn Orbs;
     private bool onRange = false;
     private int waypointIndex = 0;
     private bool goBack = false;
@@ -26,13 +23,31 @@ public class EnemyController : Creature
 
     #endregion
 
+    #region Properties
+
+    public Transform Chest
+    {
+        get { return this.chest; }
+    }
+
+    #endregion
+
     #region UnityMethods
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        this.RemainingCD = this.atkCooldown;
-        this.remainingMovementCD = myEnemyData.MovementCD;
+        base.Awake();
+        movementCDTimer = gameObject.AddComponent<Timer>();
+        hp = myEnemyData.MaxHP;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        Orbs = orbs.GetComponent<OrbsSpawn>();
+        movementCDTimer.Duration = myEnemyData.MovementCD;
+
     }
 
     // Update is called once per frame
@@ -43,13 +58,11 @@ public class EnemyController : Creature
             MoveEnemy();
             AnimationController.SetBool("isWalking", true);
         }
-        this.AtackCooldown();
-        MovementCooldown();
-        Aggro();
-        this.RenderHP();
+        this.Aggro();
     }
 
     #endregion
+
 
     #region PrivateMethods
 
@@ -57,8 +70,9 @@ public class EnemyController : Creature
     {
         Vector3 direction = waypoints[waypointIndex].position - transform.position;
 
-        if (!this.movementInCD)
+        if (!movementCDTimer.Running)
         {
+            movementCDTimer.Run();
             if (!onRange)
             {
                 transform.position += transform.forward * myEnemyData.Speed * Time.deltaTime;
@@ -67,8 +81,7 @@ public class EnemyController : Creature
         }
         if (direction.magnitude < minDistance)
         {
-            this.movementInCD = true;
-            this.remainingMovementCD = myEnemyData.MovementCD;
+            movementCDTimer.Duration = 1f;
 
             if (waypointIndex >= waypoints.Length - 1)
             {
@@ -86,19 +99,6 @@ public class EnemyController : Creature
             {
                 waypointIndex--;
             }
-        }
-    }
-
-    private void MovementCooldown()
-    {
-        if (this.movementInCD && this.remainingMovementCD >= 0)
-        {
-            this.remainingMovementCD -= Time.deltaTime;
-            //Debug.Log($"creature log cd remaining {remainingCD}");
-        }
-        if (this.remainingMovementCD <= 0)
-        {
-            this.movementInCD = false;
         }
     }
 
@@ -140,39 +140,34 @@ public class EnemyController : Creature
         }
     }
 
-
     private void MeleeAtack()
     {
-        
-        if (!this.AtkInCooldown)
+        if (!this.attackCDTimer.Running)
         {
+            this.attackCDTimer.Run();
+            this.weapon.MakeMeleeDamage();
             AnimationController.SetBool("isAttacking", true);
-            Debug.Log($"Warrior atack");
-            this.weapon.gameObject.GetComponent<Collider>().isTrigger = true;
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
         }
-        else if (RemainingCD < 1f)
+        else if (this.attackCDTimer.SecondsLeft < 1f)
         {
+            this.attackCDTimer.Duration = this.atkCooldown;
             AnimationController.SetBool("isAttacking", false);
-            this.weapon.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
 
     private void LongRangeAtack()
     {
-        if (!this.AtkInCooldown)
+        
+        if (!this.attackCDTimer.Running)
         {
-            Debug.Log($"Archer atack");
-            this.AtkInCooldown = true;
-            this.RemainingCD = this.atkCooldown;
+            this.attackCDTimer.Run();
             weapon.MakeLongDamage(myEnemyData.AttackRange);
             AnimationController.SetBool("isArcher", true);
         }
-        else if (RemainingCD < 1f)
+        else if (this.attackCDTimer.SecondsLeft <= 1f)
         {
+            this.attackCDTimer.Duration = atkCooldown;
             AnimationController.SetBool("isArcher", false);
-            //AnimationController.SetBool("isAttacking", false);
         }
     }
 
@@ -188,13 +183,29 @@ public class EnemyController : Creature
                 MeleeAtack();
                 break;
             case CharClass.Archer:
-                //LongRangeAtack();
+                LongRangeAtack();
                 break;
             default:
                 break;
         }
     }
 
+    protected override void Die()
+    {
+        EventManager.RaiseEvent("onAtack");
+        Orbs.SpawnOrbs(Orbs.pointsToOrbs(myEnemyData.Points));
+        base.Die();
+    }
+
+    public void InitAtkAnimationEvent()
+    {
+        EventManager.RaiseEvent("onAnimationAtkInitEnemy");
+    }
+
+    public void FinishAtkAnimationEvent()
+    {
+        EventManager.RaiseEvent("onAnimationAtkFinishedEnemy");
+    }
     #endregion
-}
+}   
 
