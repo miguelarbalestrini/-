@@ -93,10 +93,8 @@ public class Kingslayer : Creature
     {
         if (Input.GetMouseButtonDown(0) && !this.attackCDTimer.Running)
         {
-            Debug.Log("No Tengo cooldown");
             base.Atack();
             this.attackCDTimer.Run();
-            //Debug.Log($"atack");
             if (this.weapon.IsMelee)
             {
                 this.hiddenWeapon.MakeMeleeDamage();
@@ -125,19 +123,29 @@ public class Kingslayer : Creature
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            this.transform.GetChild(3).gameObject.SetActive(true);
-            ArrayWeapons[1].gameObject.SetActive(true);
-            ArrayWeapons[2].gameObject.SetActive(false);
-            AudioManager.Play(AudioClipName.MeleeWeaponDraw);
-            weapon = ArrayWeapons[1];
+            MeleeMode();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        /*if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             this.transform.GetChild(3).gameObject.SetActive(false);
             ArrayWeapons[1].gameObject.SetActive(false);
             ArrayWeapons[2].gameObject.SetActive(true);
             weapon = ArrayWeapons[2];
-        }
+        }*/
+    }
+
+    private void MeleeMode()
+    {
+        this.transform.GetChild(3).gameObject.SetActive(true);
+        ArrayWeapons[1].gameObject.SetActive(true);
+        ArrayWeapons[2].gameObject.SetActive(false);
+        AudioManager.Play(AudioClipName.MeleeWeaponDraw);
+        weapon = ArrayWeapons[1];
+    }
+
+    private void OnEnable()
+    {
+        MeleeMode();
     }
 
     private void UpdateHealtBar()

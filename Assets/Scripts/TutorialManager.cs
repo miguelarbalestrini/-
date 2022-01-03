@@ -9,16 +9,13 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] private Image panel;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private GameObject enemiesConteiner;
+    [SerializeField] private GameObject vanishedWalls;
+    [SerializeField] private Kingslayer player;
 
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        disableWalls();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,5 +27,29 @@ public class TutorialManager : MonoBehaviour
     {
         panel.gameObject.SetActive(false);
         text.gameObject.SetActive(false);
+        if (player)
+        {
+            player.enabled = true;
+        }
+        ActiveEnemies();
+    }
+
+    private void disableWalls()
+    {
+        if (vanishedWalls && GameManager.GetScore() >= 3)
+        {
+            vanishedWalls.SetActive(false);
+        }
+    }
+
+    private void ActiveEnemies()
+    {
+        if (enemiesConteiner)
+        {
+            foreach (Transform children in enemiesConteiner.transform)
+            {
+                children.gameObject.SetActive(true);
+            }
+        }
     }
 }

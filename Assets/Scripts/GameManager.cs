@@ -39,15 +39,9 @@ public class GameManager : MonoBehaviour
         EventManager.StartListening("onPause", PauseGame);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AddScore(EventParam eventParam)
     {
-        instance.scoreInstanciado += 1;
+        instance.scoreInstanciado += 10;
     }
 
     public void SubsScore(EventParam eventParam)
