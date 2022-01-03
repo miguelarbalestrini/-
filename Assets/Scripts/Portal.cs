@@ -10,8 +10,9 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadSceneAsync(levelName);
         AudioManager.Stop();
-        AudioManager.PlayLoop(AudioClipName.BackgroundBoss1);
+        AudioManager.Play(AudioClipName.ActivatePortal);
+        SceneManager.LoadSceneAsync(levelName);
+        AudioManager.PlayLoopDelayed(AudioClipName.BackgroundBoss1, 1.5f);
     }
 }

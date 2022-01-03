@@ -13,6 +13,11 @@ public enum AudioClipName
     MeleeWeaponDraw,
     GameLost,
     Walk,
+    OpenChest1,
+    OpenChest2,
+    PickOrb1,
+    PickOrb2,
+    ActivatePortal,
     BackgroundSurvival,
     BackgroundBoss1,
     BackgroundBoss2

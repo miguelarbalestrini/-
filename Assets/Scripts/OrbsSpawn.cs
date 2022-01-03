@@ -25,6 +25,7 @@ public class OrbsSpawn : MonoBehaviour
         for (int i = 0; i < numOrbs; i++)
         {
             SetOrb();
+            AudioManager.Play(AudioClipName.PickOrb2);
         }
     }
 
