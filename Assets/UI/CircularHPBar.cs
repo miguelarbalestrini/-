@@ -6,36 +6,21 @@ public class CircularHPBar : MonoBehaviour
     [SerializeField] private Image healtBar;
     private EnemyController CurrenthpData = null;
     private float maxHp;
-    private float initialHp;
-    private float currentHp;
-    bool resetedHp = false;
-    bool filledOnce = false;
     private float lerpSpeed;
 
-    EnemyController currentEnemy;
-    EnemyController enemyController;
     private void Start()
     {
-     /*
-        maxHp = hpData.Health;
-        currentEnemy = hpData;
-        maxHp = currentEnemy.Health;
-        initialHp = hpData.Health;
-      */
         EventManager.StartListening("onLock", setHealthBar);
-        //EventManager.RaiseEvent("onLock");
     }
 
     void Update()
     {
-       
         if (CurrenthpData != null )
         {
             lerpSpeed = 5f * Time.deltaTime;
             HealtBarFiller();
             ColorChanger();
         }
-      
     }
 
     void HealtBarFiller()
@@ -51,7 +36,7 @@ public class CircularHPBar : MonoBehaviour
         healtBar.color = healtColor;
     }
 
-    void setHealthBar(EventParam eventParam )
+    void setHealthBar(EventParam eventParam)
     {
         if (eventParam.enemyControllerParam)
         {
@@ -59,8 +44,6 @@ public class CircularHPBar : MonoBehaviour
             maxHp = CurrenthpData.Health;
             HealtBarFiller();
             ColorChanger();
-            Debug.Log($"{CurrenthpData.gameObject.name}: {CurrenthpData.Health}");
-            Debug.Log($"MAXHP: {maxHp}");
         }
     }
 }

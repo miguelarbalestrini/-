@@ -34,21 +34,31 @@ public static class AudioManager
         audioClips.Add(AudioClipName.AtkSwing,
             Resources.Load<AudioClip>("AtkSwing"));
         audioClips.Add(AudioClipName.AtkImpact1,
-           Resources.Load<AudioClip>("AtkImpact1"));
+            Resources.Load<AudioClip>("AtkImpact1"));
         audioClips.Add(AudioClipName.AtkImpact2,
-          Resources.Load<AudioClip>("AtkImpact2"));
+            Resources.Load<AudioClip>("AtkImpact2"));
         audioClips.Add(AudioClipName.MeleeWeaponDraw,
-     Resources.Load<AudioClip>("MeleeWeaponDraw"));
+            Resources.Load<AudioClip>("MeleeWeaponDraw"));
         audioClips.Add(AudioClipName.GameLost,
             Resources.Load<AudioClip>("GameLost"));
         audioClips.Add(AudioClipName.Walk,
             Resources.Load<AudioClip>("Walk"));
+        audioClips.Add(AudioClipName.OpenChest1,
+            Resources.Load<AudioClip>("OpenChest1"));
+        audioClips.Add(AudioClipName.OpenChest2,
+            Resources.Load<AudioClip>("OpenChest2"));
+        audioClips.Add(AudioClipName.PickOrb1,
+            Resources.Load<AudioClip>("PickOrb1"));
+        audioClips.Add(AudioClipName.PickOrb2,
+            Resources.Load<AudioClip>("PickOrb2"));
+        audioClips.Add(AudioClipName.ActivatePortal,
+            Resources.Load<AudioClip>("ActivatePortal"));
         audioClips.Add(AudioClipName.BackgroundSurvival,
-         Resources.Load<AudioClip>("BackgroundSurvival"));
+            Resources.Load<AudioClip>("BackgroundSurvival"));
         audioClips.Add(AudioClipName.BackgroundBoss1,
-         Resources.Load<AudioClip>("BackgroundBoss1"));
+            Resources.Load<AudioClip>("BackgroundBoss1"));
         audioClips.Add(AudioClipName.BackgroundBoss2,
-         Resources.Load<AudioClip>("BackgroundBoss2"));
+            Resources.Load<AudioClip>("BackgroundBoss2"));
     }
 
     /// <summary>
@@ -97,5 +107,13 @@ public static class AudioManager
         {
             AuxAudioSource.Play();
         }
+    }
+
+    public static void PlayLoopDelayed(AudioClipName name, float delay)
+    {
+        audioSource.clip = audioClips[name];
+        audioSource.playOnAwake = true;
+        audioSource.loop = true;
+        audioSource.PlayDelayed(delay);
     }
 }

@@ -32,15 +32,12 @@ public class Kingslayer : Creature
         maxHealt = hp;
         maxMP = mp;
         healtBar.SetMaxHealth(maxHealt);
-        //EventManager.StartListening("onLeftClick", this.Atack);
     }
 
     // Update is called once per frame
     void Update()
     {
         this.Atack();
-        //this.resetEstance();
-        //this.RenderHP();
         UpdateHealtBar();
         this.ChangeWeapon();
     }
@@ -67,19 +64,13 @@ public class Kingslayer : Creature
                 case Orb.typesOrbs.HP:
                     if (hp < maxHealt)
                         hp += orb.OrbValue;
-                    else
-                        Debug.Log("HP: " + hp);
                     break;
                 case Orb.typesOrbs.MP:
                     if (mp < maxMP)
                         mp += orb.OrbValue;
-                    else
-                        Debug.Log("MP: " + mp);
                     break;
                 case Orb.typesOrbs.EnemyOrbs:
                     playerOrb += orb.OrbValue;
-                    //Debug.Log(orb.OrbValue);
-                    Debug.Log("Orbs: " + playerOrb);
                     break;
                 case Orb.typesOrbs.SpPoints:
                     break;

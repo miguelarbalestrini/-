@@ -56,6 +56,7 @@ public class ChestController : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
+            AudioManager.Play(AudioClipName.OpenChest2);
             int numOrbs = spawn.pointsToOrbs(orbPoints);
             spawn.SpawnOrbs(numOrbs);
         }
