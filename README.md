@@ -3,6 +3,11 @@
 Kingslayer is an adventure game whose protagonist is what appears to be a simple paladin, in search of glory and honor, trying to become the KingSlayer.
 In his adventure will face multiple monarchs of all kinds, each incursion, he will crush hordes of enemies.
 The peace of humanity rests on his shoulders, will able to save it?
+
+## Download 
+
+- [KingSlayer Demo](https://kingslayerdownloadgame.000webhostapp.com/)
+
 ## Game Authors
 
 - [Tomas Uribe](https://github.com/maqueco)
