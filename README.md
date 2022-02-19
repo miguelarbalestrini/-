@@ -8,6 +8,10 @@ The peace of humanity rests on his shoulders, will able to save it?
 
 - [KingSlayer Demo](https://kingslayerdownloadgame.000webhostapp.com/)
 
+## Publish 
+
+- [KingSlayer Unity Play](https://play.unity.com/mg/other/build-58e)
+
 ## Game Authors
 
 - [Tomas Uribe](https://github.com/maqueco)
