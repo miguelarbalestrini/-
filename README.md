@@ -4,11 +4,11 @@ Kingslayer is an adventure game whose protagonist is what appears to be a simple
 In his adventure will face multiple monarchs of all kinds, each incursion, he will crush hordes of enemies.
 The peace of humanity rests on his shoulders, will able to save it?
 
-## Download 
+## Demo
 
-- [KingSlayer Demo](https://kingslayerdownloadgame.000webhostapp.com/)
+- [Video Demo](https://youtu.be/9kmpUfeE824)
 
-## Publish 
+## Play
 
 - [KingSlayer Unity Play](https://play.unity.com/mg/other/build-58e)
 
